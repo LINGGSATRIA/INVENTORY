@@ -1,0 +1,21 @@
+.bg-image {
+    background-image: url('./img/Leopard_roni_sontani-1024x683.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Pastikan gambar mengambil seluruh tinggi layar */
+}
+
+.bg-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(5px); /* Efek blur */
+    border-radius: 10px; /* Membuat sudut membulat */
+    padding: 20px; /* Padding yang menyesuaikan dengan ukuran layar */
+    box-sizing: border-box; /* Agar padding tidak menambah ukuran elemen */
+    width: 100%; /* Membuat elemen mengambil lebar penuh */
+    height: 100%; /* Membuat elemen mengambil tinggi penuh */
+}
