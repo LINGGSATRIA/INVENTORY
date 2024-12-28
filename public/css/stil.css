@@ -1,0 +1,147 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Pusatkan kontainer secara horizontal */
+    align-items: center; /* Pusatkan kontainer secara vertikal */
+    height: 100vh; /* Tinggi penuh untuk memusatkan konten secara vertikal */
+}
+
+.container {
+    max-width: 300px;
+    background-color: transparent;
+}
+
+.product-image {
+    text-align: center; /* Pusatkan gambar */
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: 16px;
+    margin: 10px 20px; /* Jarak atas dan bawah pada judul */
+    text-align: left; /* Teks judul di kiri */
+    margin-left: 10px;
+}
+
+.qr-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    margin: 10px 0; /* Jarak atas dan bawah pada status QR */
+}
+
+.valid {
+    color: green;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.qr-scan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Sesuaikan dengan kebutuhan */
+    margin: 10px 0; /* Jarak atas dan bawah pada status QR */
+}
+.bi{
+    color: green;
+}
+
+.scan {
+    color: #666;
+    text-align: left;
+    margin-left: 10px;
+}
+.qr-code{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Sesuaikan dengan kebutuhan */
+}
+
+.scan1 {
+    color: #666; /* Jarak antara teks valid dan total scan */
+    margin-left: 10px;
+    text-align: left;
+}
+.link {
+    color: #666;/* Jarak antara teks valid dan total scan */
+    font-weight: bold;
+    text-align: right;
+    margin-right: 10px;
+}
+.total-scan {
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+    text-align: right;
+    margin-right: 10px;
+}
+
+p {
+    color: #525050;
+    font-size: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-bottom: -5px;
+}
+.serial-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Sesuaikan dengan kebutuhan */
+    margin: 10px 0; /* Jarak atas dan bawah pada status QR */
+}
+.serial {
+    color: #666;
+   text-align: left;
+    margin-left: 10px;
+}
+.number {
+    color: #666;/* Jarak antara teks valid dan total scan */
+    text-align: right;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+h2 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0 10px 0; /* Jarak untuk subjudul */
+    color: #373636;
+    margin-left: 10px;
+}
+
+button {
+    background-color: #c90303;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px; /* Jarak atas untuk tombol */
+}
+
+button:hover {
+    background-color: #b30000;
+}
+.divider {
+    border: none; /* Menghilangkan border default */
+    height: 6px; /* Ketebalan garis */
+    background-color: #e0e0e0; /* Warna garis */
+    margin: 10px 0; /* Jarak atas dan bawah untuk garis */
+    width: 100%;
+}
