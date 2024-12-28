@@ -26,27 +26,7 @@
 <li class="nav-item">
     <a class="nav-link" href="<?= base_url('produk') ?>">
         <i class="fas fa-fw fa-table"></i>
-        <span>Generate</span></a>
-</li>
-
-<!-- Divider -->
-<hr class="sidebar-divider">
-
-<!-- Nav Item - Utilities Collapse Menu -->
-<li class="nav-item">
-    <a class="nav-link" href="<?= base_url('kategori') ?>">
-        <i class="fas fa-fw fa-table"></i>
-        <span>Kategori</span></a>
-</li>
-
-<!-- Divider -->
-<hr class="sidebar-divider">
-
-<!-- Nav Item - Charts -->
-<li class="nav-item">
-    <a class="nav-link" href="<?= base_url('list') ?>">
-        <i class="fas fa-fw fa-chart-area"></i>
-        <span>List Produk</span></a>
+        <span>Master Data</span></a>
 </li>
 
 <!-- Divider -->
