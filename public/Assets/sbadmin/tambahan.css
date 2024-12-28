@@ -19,3 +19,21 @@
     width: 100%; /* Membuat elemen mengambil lebar penuh */
     height: 100%; /* Membuat elemen mengambil tinggi penuh */
 }
+.tank-image {
+    width: 100px; /* Ukuran tank */
+    height: auto;
+    animation: moveTank 2s linear infinite; /* Animasi tank berjalan */
+}
+
+@keyframes moveTank {
+    0% {
+        transform: translateX(-50px);
+    }
+    100% {
+        transform: translateX(220px);
+        -webkit-transform: translateX(220px);
+        -moz-transform: translateX(220px);
+        -ms-transform: translateX(220px);
+        -o-transform: translateX(220px);
+}
+}

@@ -56,12 +56,30 @@
                                     </form>
                                 </div>
                             </div>
+                            <!-- Animasi Tank -->
+                            <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
+                                <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            // Mencegah pengiriman form default
+            event.preventDefault();
+
+            // Tampilkan animasi tank
+            document.getElementById("loading-animation").style.display = "block";
+
+            // Simulasikan proses login
+            setTimeout(() => {
+                this.submit(); // Kirim form setelah animasi selesai
+            }, 2000); // Durasi animasi (ms)
+        });
+    </script>
 </body>
 
 </html>
