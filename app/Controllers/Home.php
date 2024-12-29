@@ -9,4 +9,14 @@ class Home extends BaseController
         return view('login');
     }
 
+    public function Stok(): string
+    {
+        return view('stokpusat');
+    }
+    
+    public function DataRanpur(): string
+    {
+        return view('dataranpur');
+    }
+
 }
