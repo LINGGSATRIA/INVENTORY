@@ -112,55 +112,55 @@
 
         let subSubCards = [];
 
-        // Define sub-sub-cards based on the sub-card name
+        // Define sub-sub-cards jika ingin menambahkan nama ranpur Tambahkan Awalan Ranpur di bagian Link Data Ranpur dan Awlan Stok Di bagian Link Stok
         if (subCardName === 'Leopard') {
             subSubCards = [{
                     name: 'Data Ranpur',
-                    link: 'Leopard'
+                    link: 'Ranpur Leopard'
                 },
                 {
                     name: 'Stok Suku Cadang Pusat',
-                    link: 'Leopard'
+                    link: 'Stok Leopard'
                 }
             ];
         } else if (subCardName === 'Harimau') {
             subSubCards = [{
                     name: 'Data Ranpur',
-                    link: 'Harimau'
+                    link: 'Ranpur Harimau'
                 },
                 {
                     name: 'Stok Suku Cadang Pusat',
-                    link: 'Harimau'
+                    link: 'Stok Harimau'
                 }
             ];
         } else if (subCardName === 'Scorpion') {
             subSubCards = [{
                     name: 'Data Ranpur',
-                    link: 'Scorpion'
+                    link: 'Ranpur Scorpion'
                 },
                 {
                     name: 'Stok Suku Cadang Pusat',
-                    link: 'Scorpion'
+                    link: 'Stok Scorpion'
                 }
             ];
         } else if (subCardName === 'AMX') {
             subSubCards = [{
                     name: 'Data Ranpur',
-                    link: 'AMX'
+                    link: ' Ranpur AMX'
                 },
                 {
                     name: 'Stok Suku Cadang Pusat',
-                    link: 'AMX'
+                    link: 'Stok AMX'
                 }
             ];
         } else if (subCardName === 'Badak') {
             subSubCards = [{
                     name: 'Data Ranpur',
-                    link: 'Badak'
+                    link: 'Ranpur Badak'
                 },
                 {
                     name: 'Stok Suku Cadang Pusat',
-                    link: 'Badak'
+                    link: 'Stok Badak'
                 }
             ];
         } else if (subCardName === 'Truck Personel') {
@@ -245,50 +245,118 @@
     }
     async function showSubSubSubCards(subSubCardLink) {
         const subSubSubCardsContainer = document.getElementById('sub-sub-sub-cards');
-        const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');
         const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
-        DeskripsiCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-        subSubSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
         subSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-
+        DeskripsiCardsContainer.innerHTML = ''; // Clear any existing descriptions
+    
         try {
-            // Fetch data Ranpur berdasarkan nama ranpur
-           const response = await fetch('/wilayah/getByName/' + subSubCardLink);
-
-            if (!response.ok) {
-                throw new Error(`Error fetching data: ${response.status}`);
+            // Tentukan apakah yang diklik adalah Ranpur atau Stok
+            let endpointRanpur = false;
+            let endpointStok = false;
+    
+            // Menghapus awalan "Ranpur" atau "Stok" jika ada
+            const subSubCardLinkWithoutPrefix = subSubCardLink.replace(/^Ranpur |^Stok /, '');
+    
+            // Tentukan endpoint yang akan dipanggil berdasarkan subSubCardLink
+            if (subSubCardLink.startsWith('Ranpur')) {
+                endpointRanpur = true;
             }
-
-            const ranpurData = await response.json();
-
-            if (ranpurData.length === 0) {
-                subSubSubCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
-                return;
+            if (subSubCardLink.startsWith('Stok')) {
+                endpointStok = true;
             }
+    
+            // Variabel untuk menampung data
+            let ranpurData = [];
+            let stokData = [];
+    
+            // Fetch data berdasarkan endpoint yang dipilih
+            if (endpointRanpur) {
+                // Ambil data Ranpur dari endpoint getByName
+                const ranpurResponse = await fetch('/wilayah/getByName/' + subSubCardLinkWithoutPrefix);
+                if (!ranpurResponse.ok) {
+                    throw new Error('Gagal mengambil data Ranpur.');
+                }
+                ranpurData = await ranpurResponse.json();
+            }
+    
+            if (endpointStok) {
+                // Ambil data Stok dari endpoint getBytipe
+                const stokResponse = await fetch('/stokpusat/getBytipe/' + subSubCardLinkWithoutPrefix);
+                if (!stokResponse.ok) {
+                    throw new Error('Gagal mengambil data Stok.');
+                }
+                stokData = await stokResponse.json();
+            }
+    
+            // Tampilkan data Ranpur jika ada
+            if (ranpurData.length > 0) {
+                ranpurData.forEach(ranpur => {
+                    const cardHTML = `
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubSubCards('${ranpur.nama_wilayah}')">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_wilayah}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            } 
+    
+  // Tampilkan data Stok jika ada
+if (stokData.length > 0) {
+    stokData.forEach(stok => {
+        // Membagi deskripsi berdasarkan <p> dan <hr>
+        const descriptionParts = stok.deskripsi.split('<hr>');
+        let sheetHTML = '';
 
-            // Generate sub-sub-sub-cards HTML dynamically berdasarkan data ranpur dan wilayah
-            ranpurData.forEach(ranpur => {
-                const cardHTML = `
-                <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubSubCards('${ranpur.nama_wilayah}')">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-sm">Wilayah: ${ranpur.nama_wilayah}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_wilayah}</div>
+        // Proses setiap bagian deskripsi
+        descriptionParts.forEach(part => {
+            // Menampilkan setiap <p> yang ada di dalam bagian deskripsi
+            const paragraphs = part.split('<p>');
+            paragraphs.forEach(p => {
+                if (p) { // Menghindari string kosong
+                    sheetHTML += `
+                        <p>${p}</p>
+                    `;
+                }
+            });
+        });
+
+        // Membuat card untuk setiap kategori
+        const cardHTML = `
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">${stok.nama_kategori}</div>
+                                <div class="sheet">
+                                    ${sheetHTML}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            `;
-                subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-            });
+            </div>
+        `;
+
+        // Menambahkan card HTML ke dalam container
+        subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+    });
+} 
+
+    
         } catch (error) {
             console.error('Error fetching data:', error);
             subSubSubCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
         }
-    }
+    }    
 
     async function showSubSubSubSubCards(nama_wilayah) {
         const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');
@@ -319,7 +387,6 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-sm">Wilayah: ${ranpur.nama_ranpur}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_ranpur}</div>
                                 </div>
                             </div>

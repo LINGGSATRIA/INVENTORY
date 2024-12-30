@@ -38,4 +38,6 @@ class RanpurModel extends Model
             ->where('wilayah.nama_wilayah', $nama_wilayah)
             ->findAll();
     }
+
+    
 }

@@ -6,6 +6,7 @@ use App\Models\RanpurModel;
 use App\Models\JenisRanpurModel;
 use App\Models\TipeRanpurModel;
 use App\Models\WilayahModel;
+use App\Models\StokDataModel;
 
 class Home extends BaseController
 {
@@ -13,6 +14,7 @@ class Home extends BaseController
     protected $jenisRanpurModel;
     protected $wilayahModel;
     protected $TipeRanpurModel;
+    protected $stokDataModel;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class Home extends BaseController
         $this->jenisRanpurModel = new JenisRanpurModel();
         $this->wilayahModel = new WilayahModel();
         $this->TipeRanpurModel = new TipeRanpurModel();
+        $this->stokDataModel = new StokDataModel();
     }
     public function index(): string
     {
@@ -45,6 +48,27 @@ class Home extends BaseController
         // Kembalikan data dalam format JSON
         return $this->response->setJSON($dataRanpur);
     }
+
+    public function getByTipe($tipe)
+    {
+        // Query untuk mengambil data stok berdasarkan tipe
+        $stokData = $this->stokDataModel
+            ->select('kategori_stok.deskripsi, kategori.nama_kategori, tipe_ranpur.tipe_ranpur')
+            ->join('tipe_ranpur', 'tipe_ranpur.id = kategori_stok.id_tipe_ranpur')
+            ->join('kategori', 'kategori.id = kategori_stok.id_kategori')
+            ->where('tipe_ranpur.tipe_ranpur', $tipe)
+            ->findAll();
+
+        // Mengecek apakah data ditemukan
+        if (empty($stokData)) {
+            return $this->response->setJSON(['message' => 'Data tidak ditemukan']);
+        }
+
+        // Mengembalikan data stok dalam format JSON
+        return $this->response->setJSON($stokData);
+    }
+
+
     public function getByWilayah($namaWilayah)
     {
         $ranpurModel = new RanpurModel();
