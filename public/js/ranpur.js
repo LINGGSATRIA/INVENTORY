@@ -320,6 +320,7 @@ if (stokData.length > 0) {
             const paragraphs = part.split('<p>').map(p => p.replace('</p>', '').trim()).filter(p => p).map(p => p);
             const tabId = `sheet-${stok.id}-${index}`; // ID unik untuk tab
             const tabName = `Sheet ${index + 1}`; // Nama tab (Sheet 1, Sheet 2, dst)
+            // const tabName = `${paragraphs}`; // Nama tab (Sheet 1, Sheet 2, dst)
 
             // Tambahkan tab header
             tabsHTML += `
