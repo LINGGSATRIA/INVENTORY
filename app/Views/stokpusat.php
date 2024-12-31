@@ -53,8 +53,33 @@
     tinymce.init({
         selector: '#editor',
         plugins: 'advlist autolink lists link image charmap print preview anchor',
-        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
-        language: 'id'
+        toolbar: 'undo redo | styleselect | judulSheet kontenSheet pemisahSheet | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
+        language: 'id',
+        setup: function(editor) {
+            // Tombol untuk Judul Sheet
+            editor.ui.registry.addButton('judulSheet', {
+                text: 'Judul Sheet',
+                onAction: function() {
+                    editor.insertContent('<p style="color: blue; font-weight: bold;">Judul Sheet</p>');
+                }
+            });
+
+            // Tombol untuk Konten Sheet
+            editor.ui.registry.addButton('kontenSheet', {
+                text: 'Konten Sheet',
+                onAction: function() {
+                    editor.insertContent('<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>');
+                }
+            });
+
+            // Tombol untuk Pemisah Sheet
+            editor.ui.registry.addButton('pemisahSheet', {
+                text: 'Pemisah Sheet',
+                onAction: function() {
+                    editor.insertContent('<hr>');
+                }
+            });
+        }
     });
 </script>
 <?= $this->endSection() ?>

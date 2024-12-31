@@ -308,38 +308,54 @@
                 });
             } 
     
-  // Tampilkan data Stok jika ada
+// Tampilkan data stok jika ada
 if (stokData.length > 0) {
     stokData.forEach(stok => {
-        // Membagi deskripsi berdasarkan <p> dan <hr>
+        // Membagi deskripsi berdasarkan <hr>
         const descriptionParts = stok.deskripsi.split('<hr>');
-        let sheetHTML = '';
+        let tabsHTML = '';
+        let tabContentsHTML = '';
 
-        // Proses setiap bagian deskripsi
-        descriptionParts.forEach(part => {
-            // Menampilkan setiap <p> yang ada di dalam bagian deskripsi
-            const paragraphs = part.split('<p>');
-            paragraphs.forEach(p => {
-                if (p) { // Menghindari string kosong
-                    sheetHTML += `
-                        <p>${p}</p>
-                    `;
-                }
-            });
+        descriptionParts.forEach((part, index) => {
+            const paragraphs = part.split('<p>').map(p => p.replace('</p>', '').trim()).filter(p => p).map(p => p);
+            const tabId = `sheet-${stok.id}-${index}`; // ID unik untuk tab
+            const tabName = `Sheet ${index + 1}`; // Nama tab (Sheet 1, Sheet 2, dst)
+
+            // Tambahkan tab header
+            tabsHTML += `
+                <li class="nav-item">
+                    <a class="nav-link ${index === 0 ? 'active' : ''}" id="${tabId}-tab" data-toggle="tab" href="#${tabId}" role="tab" aria-controls="${tabId}" aria-selected="${index === 0}">
+                        ${tabName}
+                    </a>
+                </li>
+            `;
+
+            // Tambahkan tab content
+            tabContentsHTML += `
+                <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+                    ${part || `Konten untuk ${tabName} kosong`}
+                </div>
+            `;
         });
 
-        // Membuat card untuk setiap kategori
+        // Membuat card untuk stok
         const cardHTML = `
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
+            <div class="lg-2 md-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <!-- Nama kategori -->
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">${stok.nama_kategori}</h5>
+                    </div>
+                    <!-- Tabs -->
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="stokTab${stok.id}" role="tablist">
+                            ${tabsHTML}
+                        </ul>
+                    </div>
+                    <!-- Tab contents -->
                     <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">${stok.nama_kategori}</div>
-                                <div class="sheet">
-                                    ${sheetHTML}
-                                </div>
-                            </div>
+                        <div class="tab-content" id="stokContent${stok.id}">
+                            ${tabContentsHTML}
                         </div>
                     </div>
                 </div>
@@ -349,7 +365,7 @@ if (stokData.length > 0) {
         // Menambahkan card HTML ke dalam container
         subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
     });
-} 
+}
 
     
         } catch (error) {
