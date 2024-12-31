@@ -68,7 +68,7 @@
             editor.ui.registry.addButton('kontenSheet', {
                 text: 'Konten Sheet',
                 onAction: function() {
-                    editor.insertContent('<div style="color: gray; font-style: italic;">Konten untuk Sheet</div>');
+                    editor.insertContent('<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>');
                 }
             });
 
