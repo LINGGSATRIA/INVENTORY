@@ -22,15 +22,15 @@
 .tank-image {
     width: 100px; /* Ukuran tank */
     height: auto;
-    animation: moveTank 2s linear infinite; /* Animasi tank berjalan */
+    animation: moveTank 3s linear infinite; /* Animasi tank berjalan */
 }
 
 @keyframes moveTank {
     0% {
-        transform: translateX(-50px);
+        transform: translateX(0px);
     }
     100% {
-        transform: translateX(220px);
+        transform: translateX(260px);
         -webkit-transform: translateX(220px);
         -moz-transform: translateX(220px);
         -ms-transform: translateX(220px);

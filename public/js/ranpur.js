@@ -245,8 +245,10 @@
     }
     async function showSubSubSubCards(subSubCardLink) {
         const subSubSubCardsContainer = document.getElementById('sub-sub-sub-cards');
+        const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');
         const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
         subSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
+        subSubSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
         DeskripsiCardsContainer.innerHTML = ''; // Clear any existing descriptions
     
         try {

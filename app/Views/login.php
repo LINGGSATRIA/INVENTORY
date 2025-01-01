@@ -34,9 +34,8 @@
                             <div class="col-lg">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">INVENTORY</h1>
+                                        <h1 class="h4 text-gray-900 mb-2">INVENTORY</h1>
                                     </div>
-
                                     <!-- Flashdata untuk error -->
                                     <?php if (session()->getFlashdata('error')): ?>
                                         <div class="alert alert-danger">
@@ -53,12 +52,13 @@
                                             <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                                        <!-- Animasi Tank -->
+                                    <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
+                                        <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
+                                    </div>
                                     </form>
+                                    
                                 </div>
-                            </div>
-                            <!-- Animasi Tank -->
-                            <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
-                                <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
                             </div>
                         </div>
                     </div>
