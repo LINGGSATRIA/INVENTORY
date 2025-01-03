@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" style="width: 50px; height: auto;" alt="logo">
         </div>
-        <div class="sidebar-brand-text mx-3">INVENTORI</div>
+        <div class="sidebar-brand-text mx-3"></div>KAVIANCE
     </a>
 
     <!-- Divider -->
