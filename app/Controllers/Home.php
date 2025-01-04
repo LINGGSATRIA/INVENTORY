@@ -28,6 +28,10 @@ class Home extends BaseController
     {
         return view('dash');
     }
+    public function userdash(): string
+    {
+        return view('user/dash');
+    }
 
     public function Stok(): string
     {

@@ -4,7 +4,7 @@
     <h1 class="h3 mb-4 text-gray-800">Manajemen User</h1>
 
     <!-- Form Create/Update -->
-    <form id="userForm" action="/user/create" method="POST">
+    <form id="userForm" action="user/create" method="POST">
         <input type="hidden" id="userId" name="userId">
         <div class="form-group">
             <label for="name">Nama</label>
@@ -18,6 +18,13 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <select class="form-control" id="role" name="role" required>
+                <option value="2">User</option>
+                <option value="1">Admin</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary mt-3" id="submitButton">Simpan</button>
         <button type="button" class="btn btn-secondary mt-3" id="cancelButton">Batal</button>
     </form>
@@ -30,6 +37,7 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -41,10 +49,19 @@
                         <td><?= $user['name'] ?></td>
                         <td><?= $user['email'] ?></td>
                         <td>
+                            <?php
+                            $roles = [
+                                1 => 'Admin',
+                                2 => 'User'
+                            ];
+                            echo isset($roles[$user['role']]) ? $roles[$user['role']] : 'Unknown';
+                            ?>
+                        </td>
+                        <td>
                             <!-- Tombol Edit -->
                             <button class="btn btn-warning btn-sm" onclick="editUser(<?= $user['id'] ?>)">Edit</button>
                             <!-- Tombol Hapus -->
-                            <a href="/user/delete/<?= $user['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
+                            <a href="user/delete/<?= $user['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -58,39 +75,32 @@
 </div>
 
 <script>
-    // Fungsi untuk mengisi form dengan data user yang dipilih dan ubah tombol jadi "Update"
     const editUser = (id) => {
-        fetch(`/user/edit/${id}`)
+        fetch(`user/edit/${id}`)
             .then(response => response.json())
             .then(data => {
-                // Isi form dengan data user yang dipilih
                 document.getElementById('userId').value = data.id;
                 document.getElementById('name').value = data.name;
                 document.getElementById('email').value = data.email;
-                document.getElementById('password').value = ''; // Kosongkan password pada saat edit
+                document.getElementById('password').value = '';
+                document.getElementById('role').value = data.role;
 
-                // Ubah action form untuk update
-                document.getElementById('userForm').action = `/user/update/${id}`;
-
-                // Ganti teks tombol menjadi "Update"
-                document.getElementById('submitButton').textContent = 'Update'; // Mengubah teks tombol menjadi 'Update'
+                document.getElementById('userForm').action = `user/update/${id}`;
+                document.getElementById('submitButton').textContent = 'Update';
             });
     };
 
-    // Fungsi untuk mengatur form ke kondisi awal (Create)
     const resetForm = () => {
-        document.getElementById('userForm').action = '/user/create';
+        document.getElementById('userForm').action = 'user/create';
         document.getElementById('userId').value = '';
         document.getElementById('name').value = '';
         document.getElementById('email').value = '';
         document.getElementById('password').value = '';
-        document.getElementById('submitButton').textContent = 'Simpan'; // Ubah teks tombol kembali ke 'Simpan'
+        document.getElementById('role').value = '2';
+        document.getElementById('submitButton').textContent = 'Simpan';
     };
 
-    // Tambahkan event listener untuk tombol batal yang mengembalikan form ke keadaan awal (Create)
     document.getElementById('cancelButton').addEventListener('click', resetForm);
-
-    // Jika form kosong, set kembali ke kondisi Create (misalnya ketika tombol cancel ditekan)
     document.getElementById('userForm').addEventListener('reset', resetForm);
 </script>
 

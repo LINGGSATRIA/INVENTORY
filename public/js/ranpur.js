@@ -89,7 +89,7 @@
                     <div class="h5 mb-0 font-weight-bold text-white">${subCard.name}</div>
                 </div>
                 <div class="col-auto">
-                    <img src="Assets/sbadmin/img/tank/${subCard.image}" style="width: 40px; height: auto;" alt="${subCard.name}">
+                    <img src="../Assets/sbadmin/img/tank/${subCard.image}" style="width: 40px; height: auto;" alt="${subCard.name}">
                 </div>
             </div>
         </div>

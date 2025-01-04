@@ -5,22 +5,30 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index', ['filter' => 'auth']);
-$routes->get('/stokpusat', 'StokDataController::index', ['filter' => 'auth']);
-$routes->post('/stokpusat/simpan', 'StokDataController::simpanDataStok', ['filter' => 'auth']);
-$routes->get('/stokpusat/getBytipe/(:any)', 'Home::getBytipe/$1', ['filter' => 'auth']);
-$routes->get('wilayah/getByName/(:any)', 'Home::getByName/$1', ['filter' => 'auth']);
-$routes->get('wilayah/getByWilayah/(:any)', 'Home::getByWilayah/$1', ['filter' => 'auth']);
-$routes->get('wilayah/getDeskripsi', 'Home::getDeskripsi', ['filter' => 'auth']);
-$routes->get('/ranpur', 'RanpurController::index', ['filter' => 'auth']);
-$routes->post('/ranpur/simpan', 'RanpurController::simpanDataRanpur', ['filter' => 'auth']);
-$routes->get('/user', 'UserController::index', ['filter' => 'auth']);
-$routes->get('/user/list', 'UserController::getUserList', ['filter' => 'auth']);
-$routes->post('/user/create', 'UserController::create', ['filter' => 'auth']);
-$routes->get('/user/edit/(:num)', 'UserController::edit/$1', ['filter' => 'auth']);
-$routes->post('/user/update/(:num)', 'UserController::update/$1', ['filter' => 'auth']);
-$routes->get('/user/delete/(:num)', 'UserController::delete/$1', ['filter' => 'auth']);
+
+ $routes->group('admin', ['filter' => ['auth', 'role:1']], function ($routes) {
+    $routes->get('/', 'Home::index');
+    $routes->get('stokpusat', 'StokDataController::index');
+    $routes->post('stokpusat/simpan', 'StokDataController::simpanDataStok');
+    $routes->get('ranpur', 'RanpurController::index');
+    $routes->post('ranpur/simpan', 'RanpurController::simpanDataRanpur');
+    $routes->get('user', 'UserController::index');
+    $routes->get('user/list', 'UserController::getUserList');
+    $routes->post('user/create', 'UserController::create');
+    $routes->get('user/edit/(:num)', 'UserController::edit/$1');
+    $routes->post('user/update/(:num)', 'UserController::update/$1');
+    $routes->get('user/delete/(:num)', 'UserController::delete/$1');
+});
+
+$routes->group('user', ['filter' => ['auth', 'role:2']], function ($routes) {
+    $routes->get('dashboard', 'Home::userdash');
+});
+
+// Rute autentikasi tanpa filter auth
 $routes->get('login', 'AuthController::login');
 $routes->post('auth/authenticate', 'AuthController::authenticate');
-$routes->get('logout', 'AuthController::logout');
-
+$routes->get('logout', 'AuthController::logout', ['filter' => 'auth']);
+$routes->get('/wilayah/getByName/(:any)', 'Home::getByName/$1', ['filter' => 'auth']);
+$routes->get('/wilayah/getByWilayah/(:any)', 'Home::getByWilayah/$1', ['filter' => 'auth']);
+$routes->get('/wilayah/getDeskripsi', 'Home::getDeskripsi', ['filter' => 'auth']);
+$routes->get('stokpusat/getBytipe/(:any)', 'Home::getBytipe/$1', ['filter' => 'auth']);

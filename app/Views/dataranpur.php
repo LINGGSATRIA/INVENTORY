@@ -14,7 +14,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= site_url('ranpur/simpan') ?>" method="POST">
+    <form action="<?= site_url('admin/ranpur/simpan') ?>" method="POST">
         <!-- Form for Jenis Ranpur -->
         <div class="mb-3">
             <label for="jenis_ranpur" class="form-label">Jenis Ranpur</label>

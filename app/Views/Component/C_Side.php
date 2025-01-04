@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('/') ?>">
+        <a class="nav-link" href="<?= base_url('admin/') ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -32,8 +32,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Pilih Data:</h6>
-                <a class="collapse-item" href="<?= base_url('ranpur') ?>">Data Ranpur</a>
-                <a class="collapse-item" href="<?= base_url('stokpusat') ?>">Stok Data Pusat</a>
+                <a class="collapse-item" href="<?= base_url('admin/ranpur') ?>">Data Ranpur</a>
+                <a class="collapse-item" href="<?= base_url('admin/stokpusat') ?>">Stok Data Pusat</a>
             </div>
         </div>
     </li>
@@ -42,7 +42,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('/user') ?>">
+        <a class="nav-link" href="<?= base_url('admin/user') ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Management User</span></a>
     </li>

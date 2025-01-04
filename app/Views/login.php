@@ -36,10 +36,17 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-2">KAVIANCE</h1>
                                     </div>
-                                    <!-- Flashdata untuk error -->
-                                    <?php if (session()->getFlashdata('error')): ?>
+                                    <?php if ($errors = session()->getFlashdata('error')): ?>
                                         <div class="alert alert-danger">
-                                            <?= session()->getFlashdata('error') ?>
+                                            <?php if (is_array($errors)): ?>
+                                                <ul>
+                                                    <?php foreach ($errors as $error): ?>
+                                                        <li><?= esc($error) ?></li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php else: ?>
+                                                <?= esc($errors) ?>
+                                            <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
 
@@ -53,11 +60,11 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                         <!-- Animasi Tank -->
-                                    <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
-                                        <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
-                                    </div>
+                                        <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
+                                            <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
+                                        </div>
                                     </form>
-                                    
+
                                 </div>
                             </div>
                         </div>

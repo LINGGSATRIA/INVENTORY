@@ -8,7 +8,7 @@ class UserModel extends Model
 {
     protected $table = 'users';  // Nama tabel di database
     protected $primaryKey = 'id';  // Primary key tabel
-    protected $allowedFields = ['name', 'email', 'password'];  // Kolom yang diizinkan
+    protected $allowedFields = ['name', 'email', 'role', 'password'];  // Kolom yang diizinkan
     protected $useTimestamps = true;  // Menggunakan timestamp jika ada
 
     // Hash password sebelum menyimpan data

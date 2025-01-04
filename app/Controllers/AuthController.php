@@ -15,40 +15,56 @@ class AuthController extends Controller
     public function authenticate()
     {
         $session = session();
-        $model = new \App\Models\UserModel();
+        $model = new UserModel();
 
-        // Ambil data dari form login
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'email' => 'required|valid_email',
+            'password' => 'required',
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            $session->setFlashdata('error', $validation->getErrors());
+            return redirect()->back()->withInput();
+        }
+
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
-
-        // Cari user berdasarkan email
         $user = $model->where('email', $email)->first();
 
         if ($user) {
-            // Verifikasi password
             if (password_verify($password, $user['password'])) {
-                // Login berhasil, buat session
-                $session->set('user_id', $user['id']);
-                $session->set('user_name', $user['name']);
-                $session->set('isLoggedIn', true);  // Pastikan menambahkan flag isLoggedIn
+                $session->set([
+                    'user_id' => $user['id'],
+                    'user_name' => $user['name'],
+                    'role' => $user['role'],
+                    'isLoggedIn' => true
+                ]);
 
-                // Redirect ke halaman utama setelah login
-                return redirect()->to('/');
+                return $this->redirectBasedOnRole($user['role']);
             } else {
-                // Password salah
-                $session->setFlashdata('error', 'Password salah!');
+                $session->setFlashdata('error', 'Password salah! Silakan coba lagi.');
                 return redirect()->back();
             }
         } else {
-            // Email tidak ditemukan
-            $session->setFlashdata('error', 'Email tidak ditemukan!');
+            $session->setFlashdata('error', 'Email tidak ditemukan! Silakan periksa kembali.');
             return redirect()->back();
         }
+    }
+
+    private function redirectBasedOnRole($role)
+    {
+        if ($role == 1) {
+            return redirect()->to('/admin');
+        } elseif ($role == 2) {
+            return redirect()->to('/user/dashboard');
+        }
+        return redirect()->to('/login');
     }
 
     public function logout()
     {
         session()->destroy();
-        return redirect()->to('/');
+        return redirect()->to('/login')->with('message', 'Anda telah berhasil logout.');
     }
 }

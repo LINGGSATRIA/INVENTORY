@@ -27,6 +27,7 @@ class UserController extends BaseController
         $data = [
             'name' => $this->request->getPost('name'),
             'email' => $this->request->getPost('email'),
+            'role' => $this->request->getPost('role'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
         ];
 
@@ -39,7 +40,7 @@ class UserController extends BaseController
             $this->userModel->save($data);
         }
 
-        return redirect()->to('/user');
+        return redirect()->to('admin/user');
     }
 
     public function edit($id)
@@ -54,6 +55,7 @@ class UserController extends BaseController
         // Ambil data yang dikirimkan melalui POST
         $name = $this->request->getPost('name');
         $email = $this->request->getPost('email');
+        $role = $this->request->getPost('role');
         $password = $this->request->getPost('password');
 
         // Validasi dan update data pengguna
@@ -63,6 +65,7 @@ class UserController extends BaseController
         $data = [
             'name' => $name,
             'email' => $email,
+            'role' => $role,
         ];
 
         if (!empty($password)) {
@@ -73,7 +76,7 @@ class UserController extends BaseController
         $userModel->update($id, $data);
 
         // Redirect atau kembali setelah update berhasil
-        return redirect()->to('/user');
+        return redirect()->to('admin/user');
     }
 
 
@@ -81,6 +84,6 @@ class UserController extends BaseController
     {
         $userModel = new UserModel();
         $userModel->delete($id); // Menghapus data pengguna berdasarkan ID
-        return redirect()->to('/user');
+        return redirect()->to('admin/user');
     }
 }
