@@ -18,63 +18,64 @@
                     name: 'Leopard',
                     image: 'leopard.png',
                     link: 'leopard'
-                },
-                {
-                    name: 'Harimau',
-                    image: 'Harimau.png',
-                    link: 'harimau'
-                },
-                {
-                    name: 'Scorpion',
-                    image: 'scorpion.png',
-                    link: 'scorpion'
-                },
-                {
-                    name: 'AMX',
-                    image: 'amx.png',
-                    link: 'amx'
-                },
-                {
-                    name: 'Badak',
-                    image: 'badak.png',
-                    link: 'badak'
                 }
-            ];
-        } else if (type === 'personel') {
-            subCards = [{
-                    name: 'Truck Personel',
-                    image: 'truck.png',
-                    link: 'truck'
-                },
-                {
-                    name: 'Bus Personel',
-                    image: 'bus.png',
-                    link: 'bus'
-                }
-            ];
-        } else if (type === 'intai') {
-            subCards = [{
-                    name: 'Intai Scorpion',
-                    image: 'scorpion_intai.png',
-                    link: 'scorpion_intai'
-                },
-                {
-                    name: 'Intai VBL',
-                    image: 'vbl.png',
-                    link: 'vbl'
-                }
-            ];
-        } else if (type === 'pendukung') {
-            subCards = [{
-                    name: 'Ranpur Recovery',
-                    image: 'recovery.png',
-                    link: 'recovery'
-                },
-                {
-                    name: 'Ranpur Ambulance',
-                    image: 'ambulance.png',
-                    link: 'ambulance'
-                }
+
+        //         {
+        //             name: 'Harimau',
+        //             image: 'Harimau.png',
+        //             link: 'harimau'
+        //         },
+        //         {
+        //             name: 'Scorpion',
+        //             image: 'scorpion.png',
+        //             link: 'scorpion'
+        //         },
+        //         {
+        //             name: 'AMX',
+        //             image: 'amx.png',
+        //             link: 'amx'
+        //         },
+        //         {
+        //             name: 'Badak',
+        //             image: 'badak.png',
+        //             link: 'badak'
+        //         }
+        //     ];
+        // } else if (type === 'personel') {
+        //     subCards = [{
+        //             name: 'Truck Personel',
+        //             image: 'truck.png',
+        //             link: 'truck'
+        //         },
+        //         {
+        //             name: 'Bus Personel',
+        //             image: 'bus.png',
+        //             link: 'bus'
+        //         }
+        //     ];
+        // } else if (type === 'intai') {
+        //     subCards = [{
+        //             name: 'Intai Scorpion',
+        //             image: 'scorpion_intai.png',
+        //             link: 'scorpion_intai'
+        //         },
+        //         {
+        //             name: 'Intai VBL',
+        //             image: 'vbl.png',
+        //             link: 'vbl'
+        //         }
+        //     ];
+        // } else if (type === 'pendukung') {
+        //     subCards = [{
+        //             name: 'Ranpur Recovery',
+        //             image: 'recovery.png',
+        //             link: 'recovery'
+        //         },
+        //         {
+        //             name: 'Ranpur Ambulance',
+        //             image: 'ambulance.png',
+        //             link: 'ambulance'
+        //         }
             ];
         }
 
@@ -115,114 +116,115 @@
         // Define sub-sub-cards jika ingin menambahkan nama ranpur Tambahkan Awalan Ranpur di bagian Link Data Ranpur dan Awlan Stok Di bagian Link Stok
         if (subCardName === 'Leopard') {
             subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Leopard'
-                },
-                {
+                //     // name: 'Data Ranpur',
+                //     link: 'Ranpur Leopard'
+                // },
+                // {
                     name: 'Stok Suku Cadang Pusat',
                     link: 'Stok Leopard'
                 }
             ];
-        } else if (subCardName === 'Harimau') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Harimau'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Stok Harimau'
-                }
-            ];
-        } else if (subCardName === 'Scorpion') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Scorpion'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Stok Scorpion'
-                }
-            ];
-        } else if (subCardName === 'AMX') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: ' Ranpur AMX'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Stok AMX'
-                }
-            ];
-        } else if (subCardName === 'Badak') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Badak'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Stok Badak'
-                }
-            ];
-        } else if (subCardName === 'Truck Personel') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Truck Personel'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Truck Personel'
-                }
-            ];
-        } else if (subCardName === 'Bus Personel') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Bus Personel'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Bus Personel'
-                }
-            ];
-        } else if (subCardName === 'Intai Scorpion') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Intai Scorpion'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Intai Scorpion'
-                }
-            ];
-        } else if (subCardName === 'Intai VBL') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Intai VBL'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Intai VBL'
-                }
-            ];
-        } else if (subCardName === 'Ranpur Recovery') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Recovery'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Ranpur Recovery'
-                }
-            ];
-        } else if (subCardName === 'Ranpur Ambulance') {
-            subSubCards = [{
-                    name: 'Data Ranpur',
-                    link: 'Ranpur Ambulance'
-                },
-                {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Ranpur Ambulance'
-                }
-            ];
+            
+        // } else if (subCardName === 'Harimau') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Ranpur Harimau'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Stok Harimau'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Scorpion') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Ranpur Scorpion'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Stok Scorpion'
+        //         }
+        //     ];
+        // } else if (subCardName === 'AMX') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: ' Ranpur AMX'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Stok AMX'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Badak') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Ranpur Badak'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Stok Badak'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Truck Personel') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Truck Personel'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Truck Personel'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Bus Personel') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Bus Personel'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Bus Personel'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Intai Scorpion') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Intai Scorpion'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Intai Scorpion'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Intai VBL') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Intai VBL'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Intai VBL'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Ranpur Recovery') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Ranpur Recovery'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Ranpur Recovery'
+        //         }
+        //     ];
+        // } else if (subCardName === 'Ranpur Ambulance') {
+        //     subSubCards = [{
+        //             name: 'Data Ranpur',
+        //             link: 'Ranpur Ambulance'
+        //         },
+        //         {
+        //             name: 'Stok Suku Cadang Pusat',
+        //             link: 'Ranpur Ambulance'
+        //         }
+        //    ];
         }
 
         // Generate sub-sub-cards HTML

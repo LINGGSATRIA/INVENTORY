@@ -26,6 +26,7 @@ $routes->group('user', ['filter' => ['auth', 'role:2']], function ($routes) {
 });
 
 // Rute autentikasi tanpa filter auth
+$routes->get('/', 'AuthController::login');
 $routes->get('login', 'AuthController::login');
 $routes->post('auth/authenticate', 'AuthController::authenticate');
 $routes->get('logout', 'AuthController::logout', ['filter' => 'auth']);
