@@ -35,6 +35,15 @@
             <form id="userForm" action="<?= base_url('user/update'); ?>" method="POST">
                 <div class="modal-body">
                     <input type="hidden" id="userId" name="userId">
+                    <!-- Menampilkan Foto yang Sudah Ada (Jika Ada) -->
+                    <div class="form-group d-flex justify-content-center">
+                        <img id="currentPhoto" src="<?= base_url('../img/undraw_profile_2.svg') ?>" alt="Current Photo" style="max-width: 150px; max-height: 150px; border-radius: 8px;">
+                    </div>
+                    <!-- Input Foto -->
+                    <div class="form-group">
+                        <label for="foto">Foto</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                    </div>
                     <div class="form-group">
                         <label for="name">Nama</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -93,15 +102,20 @@
         fetch(`user/edit/${userId}`)
             .then(response => response.json())
             .then(data => {
-                // Isi data ke form modal
                 document.getElementById('userId').value = data.id;
                 document.getElementById('name').value = data.name;
                 document.getElementById('email').value = data.email;
-                document.getElementById('password').value = ''; // Password kosongkan
+                document.getElementById('password').value = '';
                 document.getElementById('role').value = data.role;
 
-                // Set action form sesuai dengan ID
-                document.getElementById('userForm').action = `user/update/${userId}`;
+                // Menampilkan foto pengguna jika ada
+                if (data.foto) {
+                    document.getElementById('currentPhoto').src = `/adminfoto/${data.foto}`;
+                } else {
+                    document.getElementById('currentPhoto').src = '<?= base_url('../img/undraw_profile_2.svg') ?>'; // Gambar default jika tidak ada
+                }
+
+                document.getElementById('userForm').action = `user/update/${id}`;
                 document.getElementById('submitButton').textContent = 'Update';
             });
     };
