@@ -2,9 +2,31 @@
 <?= $this->section('konten') ?>
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">Manajemen User</h1>
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger">
+            <?= session()->getFlashdata('error'); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= session()->getFlashdata('success'); ?>
+        </div>
+    <?php endif; ?>
 
     <!-- Form Create/Update -->
-    <form id="userForm" action="user/create" method="POST">
+    <form id="userForm" action="user/create" method="POST" enctype="multipart/form-data">
+
+        <!-- Menampilkan Foto yang Sudah Ada (Jika Ada) -->
+        <div class="form-group d-flex justify-content-center">
+            <img id="currentPhoto" src="<?= base_url('../img/undraw_profile_2.svg') ?>" alt="Current Photo" style="max-width: 150px; max-height: 150px; border-radius: 8px;">
+        </div>
+        <!-- Input Foto -->
+        <div class="form-group">
+            <label for="foto">Foto</label>
+            <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+        </div>
+
         <input type="hidden" id="userId" name="userId">
         <div class="form-group">
             <label for="name">Nama</label>
@@ -16,7 +38,7 @@
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="form-group">
             <label for="role">Role</label>
@@ -25,6 +47,7 @@
                 <option value="1">Admin</option>
             </select>
         </div>
+
         <button type="submit" class="btn btn-primary mt-3" id="submitButton">Simpan</button>
         <button type="button" class="btn btn-secondary mt-3" id="cancelButton">Batal</button>
     </form>
@@ -38,6 +61,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Foto</th> <!-- Kolom Foto -->
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -58,6 +82,13 @@
                             ?>
                         </td>
                         <td>
+                            <?php if ($user['foto'] && file_exists('adminfoto/' . $user['foto'])): ?>
+                                <img src="../adminfoto/<?= $user['foto'] ?>" alt="Foto User" style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+                            <?php else: ?>
+                                <img src="<?= base_url('../img/undraw_profile_2.svg') ?>" alt="Foto User" style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+                            <?php endif; ?>
+                        </td>
+                        <td>
                             <!-- Tombol Edit -->
                             <button class="btn btn-warning btn-sm" onclick="editUser(<?= $user['id'] ?>)">Edit</button>
                             <!-- Tombol Hapus -->
@@ -67,7 +98,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4" class="text-center">Tidak ada data</td>
+                    <td colspan="6" class="text-center">Tidak ada data</td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -85,6 +116,13 @@
                 document.getElementById('password').value = '';
                 document.getElementById('role').value = data.role;
 
+                // Menampilkan foto pengguna jika ada
+                if (data.foto) {
+                    document.getElementById('currentPhoto').src = `/adminfoto/${data.foto}`;
+                } else {
+                    document.getElementById('currentPhoto').src = '<?= base_url('../img/undraw_profile_2.svg') ?>'; // Gambar default jika tidak ada
+                }
+
                 document.getElementById('userForm').action = `user/update/${id}`;
                 document.getElementById('submitButton').textContent = 'Update';
             });
@@ -98,6 +136,7 @@
         document.getElementById('password').value = '';
         document.getElementById('role').value = '2';
         document.getElementById('submitButton').textContent = 'Simpan';
+        document.getElementById('currentPhoto').src = '<?= base_url('../img/undraw_profile_2.svg') ?>'; // Reset foto ke default
     };
 
     document.getElementById('cancelButton').addEventListener('click', resetForm);

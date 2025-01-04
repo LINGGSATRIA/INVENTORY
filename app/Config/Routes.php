@@ -22,6 +22,7 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->group('user', ['filter' => ['auth', 'role:2']], function ($routes) {
     $routes->get('dashboard', 'Home::userdash');
+    $routes->get('user/edit/(:num)', 'UserController::edit/$1');
 });
 
 // Rute autentikasi tanpa filter auth

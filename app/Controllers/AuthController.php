@@ -38,6 +38,7 @@ class AuthController extends Controller
                     'user_id' => $user['id'],
                     'user_name' => $user['name'],
                     'role' => $user['role'],
+                    'foto' => $user['foto'],
                     'isLoggedIn' => true
                 ]);
 
@@ -55,7 +56,7 @@ class AuthController extends Controller
     private function redirectBasedOnRole($role)
     {
         if ($role == 1) {
-            return redirect()->to('/admin');
+            return redirect()->to('admin/');
         } elseif ($role == 2) {
             return redirect()->to('/user/dashboard');
         }

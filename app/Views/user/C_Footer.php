@@ -21,6 +21,51 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
+<!-- edit modal -->
+<!-- Modal Edit Profile -->
+<div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form id="userForm" action="<?= base_url('user/update'); ?>" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" id="userId" name="userId">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select class="form-control" id="role" name="role" required>
+                            <option value="2">User</option>
+                            <option value="1">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -40,7 +85,27 @@
         </div>
     </div>
 </div>
+<script>
+    const editUser = () => {
+        // Mengambil ID pengguna dari session
+        const userId = <?= session()->get('user_id') ?>; // Ambil ID pengguna dari session PHP
 
+        fetch(`user/edit/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Isi data ke form modal
+                document.getElementById('userId').value = data.id;
+                document.getElementById('name').value = data.name;
+                document.getElementById('email').value = data.email;
+                document.getElementById('password').value = ''; // Password kosongkan
+                document.getElementById('role').value = data.role;
+
+                // Set action form sesuai dengan ID
+                document.getElementById('userForm').action = `user/update/${userId}`;
+                document.getElementById('submitButton').textContent = 'Update';
+            });
+    };
+</script>
 <!-- Bootstrap core JavaScript-->
 <script src="<?= base_url('vendor/'); ?>jquery/jquery.min.js"></script>
 <script src="<?= base_url('vendor/'); ?>bootstrap/js/bootstrap.bundle.min.js"></script>

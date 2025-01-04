@@ -79,6 +79,6 @@ class StokDataController extends BaseController
         }
 
         // Redirect dengan pesan sukses
-        return redirect()->to('/stokpusat')->with('success', $message);
+        return redirect()->to('admin/stokpusat')->with('success', $message);
     }
 }

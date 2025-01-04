@@ -7,6 +7,7 @@ use App\Models\UserModel;
 class UserController extends BaseController
 {
     protected $userModel;
+
     public function __construct()
     {
         $this->userModel = new UserModel();
@@ -14,8 +15,7 @@ class UserController extends BaseController
 
     public function index()
     {
-        $userModel = new UserModel();
-        $users = $userModel->findAll(); // Mengambil semua data pengguna
+        $users = $this->userModel->findAll(); // Mengambil semua data pengguna
 
         // Mengirim data ke view
         return view('Manajement', ['users' => $users]);
@@ -23,12 +23,36 @@ class UserController extends BaseController
 
     public function create()
     {
+        // Ambil data dari form
         $userId = $this->request->getPost('userId');
+        $name = $this->request->getPost('name');
+        $email = $this->request->getPost('email');
+        $role = $this->request->getPost('role');
+        $password = $this->request->getPost('password');
+
+        // Upload foto jika ada
+        $photo = $this->request->getFile('foto');
+        $photoPath = '..img/default.jpg'; // Foto default jika tidak ada foto yang di-upload
+
+        if ($photo && $photo->isValid() && !$photo->hasMoved()) {
+            // Mengubah nama foto menjadi kombinasi ID pengguna dan timestamp
+            $newFileName = $userId . '_' . time() . '.' . $photo->getExtension();
+            $photoPath = 'uploads/' . $newFileName;
+            $photo->move(ROOTPATH . 'public/adminfoto/uploads', $newFileName);  // Menyimpan foto di folder 'public/uploads'
+        }
+
+        // Cek jika salah satu field kosong
+        if (empty($name) || empty($email) || empty($role) || empty($password)) {
+            return redirect()->back()->with('error', 'Semua field harus diisi.');
+        }
+
+        // Siapkan data
         $data = [
-            'name' => $this->request->getPost('name'),
-            'email' => $this->request->getPost('email'),
-            'role' => $this->request->getPost('role'),
-            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'foto' => $photoPath, // Menyimpan path foto
         ];
 
         // Jika userId ada, berarti kita melakukan update
@@ -40,13 +64,18 @@ class UserController extends BaseController
             $this->userModel->save($data);
         }
 
-        return redirect()->to('admin/user');
+        return redirect()->to('admin/user')->with('success', 'Data pengguna berhasil disimpan.');
     }
 
     public function edit($id)
     {
-        $userModel = new UserModel();
-        $user = $userModel->find($id); // Menemukan user berdasarkan ID
+        $user = $this->userModel->find($id); // Menemukan user berdasarkan ID
+
+        // Jika foto tidak ada dalam database, set foto default
+        if (empty($user['foto'])) {
+            $user['foto'] = '../img/undraw_profile_2.svg'; // Foto default jika tidak ada foto
+        }
+
         return $this->response->setJSON($user); // Pastikan data direspon dalam format JSON
     }
 
@@ -58,14 +87,39 @@ class UserController extends BaseController
         $role = $this->request->getPost('role');
         $password = $this->request->getPost('password');
 
-        // Validasi dan update data pengguna
-        $userModel = new UserModel();
+        // Ambil data pengguna dari database berdasarkan ID
+        $user = $this->userModel->find($id);
+        if (!$user) {
+            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
+        }
 
-        // Jika password kosong, biarkan password lama tetap ada
+        // Upload foto jika ada file baru yang diunggah
+        $photo = $this->request->getFile('foto');
+        $photoPath = $user['foto']; // Default ke foto lama
+
+        if ($photo && $photo->isValid() && !$photo->hasMoved()) {
+            // Menghapus foto lama jika ada file baru
+            if (!empty($user['foto']) && file_exists(ROOTPATH . 'public/' . $user['foto'])) {
+                unlink(ROOTPATH . 'public/' . $user['foto']);
+            }
+
+            // Mengubah nama foto menjadi kombinasi ID pengguna dan timestamp
+            $newFileName = $id . '_' . time() . '.' . $photo->getExtension();
+            $photoPath = 'uploads/' . $newFileName;
+            $photo->move(ROOTPATH . 'public/adminfoto/uploads', $newFileName);  // Menyimpan foto di folder 'public/uploads'
+        }
+
+        // Validasi input wajib
+        if (empty($name) || empty($email) || empty($role)) {
+            return redirect()->back()->with('error', 'Semua field harus diisi kecuali password.');
+        }
+
+        // Siapkan data untuk diperbarui
         $data = [
             'name' => $name,
             'email' => $email,
             'role' => $role,
+            'foto' => $photoPath, // Tetapkan foto lama atau baru
         ];
 
         if (!empty($password)) {
@@ -73,17 +127,16 @@ class UserController extends BaseController
             $data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
-        $userModel->update($id, $data);
+        // Proses update
+        $this->userModel->update($id, $data);
 
-        // Redirect atau kembali setelah update berhasil
-        return redirect()->to('admin/user');
+        return redirect()->to('admin/user')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
 
     public function delete($id)
     {
-        $userModel = new UserModel();
-        $userModel->delete($id); // Menghapus data pengguna berdasarkan ID
-        return redirect()->to('admin/user');
+        $this->userModel->delete($id); // Menghapus data pengguna berdasarkan ID
+        return redirect()->to('admin/user')->with('success', 'Data pengguna berhasil Dihapus.');
     }
 }

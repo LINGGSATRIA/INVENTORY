@@ -1,7 +1,7 @@
 <?= $this->extend('Component/C_Template') ?>
 <?= $this->section('konten') ?>
 <div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">DATA RANPUR</h1>
+    <h1 class="h3 mb-4 text-gray-800">DATA STOK PUSAT</h1>
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= session()->getFlashdata('success'); ?>
@@ -14,7 +14,7 @@
         </div>
     <?php endif; ?>
 
-    <form action="<?= site_url('stokpusat/simpan') ?>" method="POST">
+    <form action="<?= site_url('admin/stokpusat/simpan') ?>" method="POST">
         <!-- Form for Tipe Ranpur -->
         <div class="mb-3">
             <label for="tipe_ranpur" class="form-label">Tipe Ranpur</label>
