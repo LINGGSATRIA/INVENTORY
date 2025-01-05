@@ -192,7 +192,7 @@
                             // Setel konten editor dengan deskripsi yang diterima
                             window.editor.setContent(data.deskripsi);
                         } else {
-                                window.editor.setContent(`
+                            window.editor.setContent(`
 <table border="1" id="dataTable" style="border-collapse: collapse; width: 100%;">
     <thead>
         <tr>
