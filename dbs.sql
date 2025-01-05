@@ -14,31 +14,34 @@ CREATE TABLE IF NOT EXISTS `jenis_ranpur` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `jenis_ranpur` (`id`, `nama_ranpur`) VALUES
-	(1, 'Tank');
+	(1, 'kanon');
 
 CREATE TABLE IF NOT EXISTS `kategori` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nama_kategori` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `kategori` (`id`, `nama_kategori`) VALUES
-	(1, 'BML');
+	(1, 'BML'),
+	(6, 'asd'),
+	(7, 'sss'),
+	(8, 'Casis');
 
 CREATE TABLE IF NOT EXISTS `kategori_stok` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_tipe_ranpur` int DEFAULT NULL,
+  `id_versi_ranpur` int DEFAULT NULL,
   `id_kategori` int DEFAULT NULL,
   `Deskripsi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
-  KEY `id_tipe_ranpur` (`id_tipe_ranpur`),
   KEY `nama_kategori` (`id_kategori`) USING BTREE,
+  KEY `id_tipe_ranpur` (`id_versi_ranpur`) USING BTREE,
   CONSTRAINT `FK_kategori_stok_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id`),
-  CONSTRAINT `FK_kategori_stok_tipe_ranpur` FOREIGN KEY (`id_tipe_ranpur`) REFERENCES `tipe_ranpur` (`id`)
+  CONSTRAINT `FK_kategori_stok_versi_ranpur` FOREIGN KEY (`id_versi_ranpur`) REFERENCES `versi_ranpur` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `kategori_stok` (`id`, `id_tipe_ranpur`, `id_kategori`, `Deskripsi`) VALUES
-	(1, 1, 1, '<p style="color: blue; font-weight: bold;">Judul Sheet</p>\r\n<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>\r\n<hr>\r\n<p style="color: blue; font-weight: bold;">Judul Sheet</p>\r\n<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>\r\n<hr>\r\n<p style="color: blue; font-weight: bold;">Judul Sheet</p>\r\n<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>');
+INSERT INTO `kategori_stok` (`id`, `id_versi_ranpur`, `id_kategori`, `Deskripsi`) VALUES
+	(1, 1, 8, '<table id="dataTable" style="border-collapse: collapse; width: 100%;" border="1">\r\n<thead>\r\n<tr>\r\n<th>No. Seri Sukcad</th>\r\n<th>Jenis Sukcad</th>\r\n<th>Nama Sukcad</th>\r\n<th>Yonkav I</th>\r\n<th>Yonkav 8</th>\r\n<th>Pusdikkav</th>\r\n<th>Kikav Puslatpur</th>\r\n<th>Bengpuskav</th>\r\n<th>Gupusran</th>\r\n<th>Total Sukcad</th>\r\n</tr>\r\n</thead>\r\n<tbody>\r\n<tr>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n<td>c1</td>\r\n</tr>\r\n<tr>\r\n<td>c2</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n<td>c3</td>\r\n</tr>\r\n</tbody>\r\n</table>');
 
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -58,26 +61,25 @@ CREATE TABLE IF NOT EXISTS `ranpur` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_jenis_ranpur` int DEFAULT NULL,
   `id_tipe_ranpur` int DEFAULT NULL,
-  `id_wilayah` int DEFAULT NULL,
-  `nama_ranpur` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_versi_ranpur` int DEFAULT NULL,
   `deskripsi` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `id_jenis_ranpur` (`id_jenis_ranpur`),
-  KEY `id_wilayah` (`id_wilayah`),
   KEY `id_tipe_ranpur` (`id_tipe_ranpur`),
+  KEY `id_wilayah` (`id_versi_ranpur`) USING BTREE,
+  CONSTRAINT `FK_ranpur_versi_ranpur` FOREIGN KEY (`id_versi_ranpur`) REFERENCES `versi_ranpur` (`id`),
   CONSTRAINT `ranpur_ibfk_1` FOREIGN KEY (`id_jenis_ranpur`) REFERENCES `jenis_ranpur` (`id`),
-  CONSTRAINT `ranpur_ibfk_2` FOREIGN KEY (`id_wilayah`) REFERENCES `wilayah` (`id`),
   CONSTRAINT `ranpur_ibfk_3` FOREIGN KEY (`id_tipe_ranpur`) REFERENCES `tipe_ranpur` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `ranpur` (`id`, `id_jenis_ranpur`, `id_tipe_ranpur`, `id_wilayah`, `nama_ranpur`, `deskripsi`) VALUES
-	(1, 1, 1, 1, 'Ranpur 1', '<p style="color: blue; font-weight: bold;">Judul Sheet</p>\r\n<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>\r\n<hr>\r\n<p style="color: gray; font-style: italic;">&nbsp;</p>');
+INSERT INTO `ranpur` (`id`, `id_jenis_ranpur`, `id_tipe_ranpur`, `id_versi_ranpur`, `deskripsi`) VALUES
+	(1, 1, 1, 1, '<p style="color: blue; font-weight: bold;">Judul Sheet</p>\r\n<p style="color: gray; font-style: italic;">Konten untuk Sheet</p>\r\n<hr>\r\n<p style="color: gray; font-style: italic;">&nbsp;</p>');
 
 CREATE TABLE IF NOT EXISTS `tipe_ranpur` (
   `id` int NOT NULL AUTO_INCREMENT,
   `tipe_ranpur` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 INSERT INTO `tipe_ranpur` (`id`, `tipe_ranpur`) VALUES
 	(1, 'Leopard');
@@ -98,14 +100,16 @@ INSERT INTO `users` (`id`, `email`, `password`, `role`, `name`, `created_at`, `u
 	(3, 'admin@admin.com', '$2y$10$btHIVjS78NApiOGQs5qjo.gbXorb9Ci05SIPnbfk1Y/FWMpGjQUjW', '1', 'Lingga Satria BS', '2024-12-31 12:21:02', '2025-01-04 09:21:46', 'uploads/3_1735982506.jpeg'),
 	(7, 'user@user.com', '$2y$10$BUKNHGlYdK2ZDUe4Edwvv.It.xZLut7PUo9wTqW84jZBykKQ4yIFC', '2', 'wildan', '2025-01-04 07:06:58', '2025-01-04 09:48:51', 'uploads/7_1735984124.png');
 
-CREATE TABLE IF NOT EXISTS `wilayah` (
+CREATE TABLE IF NOT EXISTS `versi_ranpur` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nama_wilayah` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_versi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `wilayah` (`id`, `nama_wilayah`) VALUES
-	(1, 'Yonkav 1');
+INSERT INTO `versi_ranpur` (`id`, `nama_versi`) VALUES
+	(1, 'Leopard_XXX'),
+	(3, 'Leopard_YYY'),
+	(4, 'asd');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
