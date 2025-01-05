@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="<?= base_url('img/tank1.ico'); ?>" type="image/x-icon">
 
-    <title>KAVIANCE</title>
+    <title>SILEO</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">

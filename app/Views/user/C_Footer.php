@@ -4,7 +4,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; KAVIANCE</span>
+            <span>Copyright &copy; SILEO</span>
         </div>
     </div>
 </footer>
