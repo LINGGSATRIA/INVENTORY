@@ -1,4 +1,4 @@
-    function showSubCards(type) {
+    async function showSubCards(type) {
         const subCardsContainer = document.getElementById('sub-cards');
         const subSubCardsContainer = document.getElementById('sub-sub-cards');
         const subSubSubCardsContainer = document.getElementById('sub-sub-sub-cards');
@@ -10,232 +10,78 @@
         subSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-cards
         subSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
 
-        let subCards = [];
+        try {
+            // Fetch data Ranpur berdasarkan nama ranpur
+            const response = await fetch('/wilayah/getTIpeBykategori/' + type);
 
-        // Define sub-cards based on the type
-        if (type === 'kanon') {
-            subCards = [{
-                    name: 'Leopard',
-                    image: 'leopard.png',
-                    link: 'leopard'
-                }
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.status}`);
+            }
 
-        //         {
-        //             name: 'Harimau',
-        //             image: 'Harimau.png',
-        //             link: 'harimau'
-        //         },
-        //         {
-        //             name: 'Scorpion',
-        //             image: 'scorpion.png',
-        //             link: 'scorpion'
-        //         },
-        //         {
-        //             name: 'AMX',
-        //             image: 'amx.png',
-        //             link: 'amx'
-        //         },
-        //         {
-        //             name: 'Badak',
-        //             image: 'badak.png',
-        //             link: 'badak'
-        //         }
-        //     ];
-        // } else if (type === 'personel') {
-        //     subCards = [{
-        //             name: 'Truck Personel',
-        //             image: 'truck.png',
-        //             link: 'truck'
-        //         },
-        //         {
-        //             name: 'Bus Personel',
-        //             image: 'bus.png',
-        //             link: 'bus'
-        //         }
-        //     ];
-        // } else if (type === 'intai') {
-        //     subCards = [{
-        //             name: 'Intai Scorpion',
-        //             image: 'scorpion_intai.png',
-        //             link: 'scorpion_intai'
-        //         },
-        //         {
-        //             name: 'Intai VBL',
-        //             image: 'vbl.png',
-        //             link: 'vbl'
-        //         }
-        //     ];
-        // } else if (type === 'pendukung') {
-        //     subCards = [{
-        //             name: 'Ranpur Recovery',
-        //             image: 'recovery.png',
-        //             link: 'recovery'
-        //         },
-        //         {
-        //             name: 'Ranpur Ambulance',
-        //             image: 'ambulance.png',
-        //             link: 'ambulance'
-        //         }
-            ];
-        }
+            const ranpurData = await response.json();
 
-        // Generate sub-cards HTML
-        subCards.forEach(subCard => {
-            const cardHTML = `
-<div class="col-xl-3 col-md-6 mb-4">
-    <div class="card shadow h-100 py-2" onclick="showSubSubCards('${subCard.name}')" style="background-color: #2E7D32;">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                    <div class="h5 mb-0 font-weight-bold text-white">${subCard.name}</div>
+            if (ranpurData.length === 0) {
+                subCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+                return;
+            }
+
+            // Generate sub-sub-sub-cards HTML dynamically berdasarkan data ranpur dan wilayah
+            ranpurData.forEach(ranpur => {
+                const cardHTML = `
+                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubCards('${ranpur.tipe_ranpur}')">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.tipe_ranpur}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <img src="../Assets/sbadmin/img/tank/${subCard.image}" style="width: 40px; height: auto;" alt="${subCard.name}">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
             `;
-            subCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-        });
+                subCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            subCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
+        }
     }
 
-    function showSubSubCards(subCardName) {
+  async function showSubSubCards(subCardName) {
         const subSubCardsContainer = document.getElementById('sub-sub-cards');
         const subSubSubCardsContainer = document.getElementById('sub-sub-sub-cards');
         const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');
         const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
-        DeskripsiCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-        subSubSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-        subSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-cards
-        subSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
+        DeskripsiCardsContainer.innerHTML = ''; 
+        subSubSubSubCardsContainer.innerHTML = ''; 
+        subSubSubCardsContainer.innerHTML = ''; 
+        subSubCardsContainer.innerHTML = ''; 
 
-        let subSubCards = [];
+        try {
+            // Fetch data Ranpur berdasarkan nama ranpur
+            const response = await fetch('/wilayah/getByNameWithVersi/' + subCardName);
 
-        // Define sub-sub-cards jika ingin menambahkan nama ranpur Tambahkan Awalan Ranpur di bagian Link Data Ranpur dan Awlan Stok Di bagian Link Stok
-        if (subCardName === 'Leopard') {
-            subSubCards = [{
-                //     // name: 'Data Ranpur',
-                //     link: 'Ranpur Leopard'
-                // },
-                // {
-                    name: 'Stok Suku Cadang Pusat',
-                    link: 'Stok Leopard'
-                }
-            ];
-            
-        // } else if (subCardName === 'Harimau') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Ranpur Harimau'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Stok Harimau'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Scorpion') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Ranpur Scorpion'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Stok Scorpion'
-        //         }
-        //     ];
-        // } else if (subCardName === 'AMX') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: ' Ranpur AMX'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Stok AMX'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Badak') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Ranpur Badak'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Stok Badak'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Truck Personel') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Truck Personel'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Truck Personel'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Bus Personel') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Bus Personel'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Bus Personel'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Intai Scorpion') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Intai Scorpion'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Intai Scorpion'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Intai VBL') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Intai VBL'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Intai VBL'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Ranpur Recovery') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Ranpur Recovery'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Ranpur Recovery'
-        //         }
-        //     ];
-        // } else if (subCardName === 'Ranpur Ambulance') {
-        //     subSubCards = [{
-        //             name: 'Data Ranpur',
-        //             link: 'Ranpur Ambulance'
-        //         },
-        //         {
-        //             name: 'Stok Suku Cadang Pusat',
-        //             link: 'Ranpur Ambulance'
-        //         }
-        //    ];
-        }
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.status}`);
+            }
 
-        // Generate sub-sub-cards HTML
-        subSubCards.forEach(subSubCard => {
-            const cardHTML = `
+            const ranpurData = await response.json();
+
+            if (ranpurData.length === 0) {
+                subSubSubCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+                return;
+            }
+
+            // Generate sub-sub-sub-cards HTML dynamically berdasarkan data ranpur dan wilayah
+            ranpurData.forEach(ranpur => {
+                const cardHTML = `
                 <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubCards('${subSubCard.link}')">
+                <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubCards('${ranpur.nama_versi}')">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${subSubCard.name}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_versi}</div>
                                 </div>
                             </div>
                         </div>
@@ -243,141 +89,96 @@
                 </div>
             `;
             subSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-        });
+            });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            subSubSubCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
+        }
     }
     async function showSubSubSubCards(subSubCardLink) {
         const subSubSubCardsContainer = document.getElementById('sub-sub-sub-cards');
         const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');
         const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
-        subSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-        subSubSubSubCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
-        DeskripsiCardsContainer.innerHTML = ''; // Clear any existing descriptions
+        subSubSubCardsContainer.innerHTML = ''; // Bersihkan konten sebelumnya
+        subSubSubSubCardsContainer.innerHTML = '';
+        DeskripsiCardsContainer.innerHTML = '';
     
         try {
-            // Tentukan apakah yang diklik adalah Ranpur atau Stok
-            let endpointRanpur = false;
-            let endpointStok = false;
-    
-            // Menghapus awalan "Ranpur" atau "Stok" jika ada
-            const subSubCardLinkWithoutPrefix = subSubCardLink.replace(/^Ranpur |^Stok /, '');
-    
-            // Tentukan endpoint yang akan dipanggil berdasarkan subSubCardLink
-            if (subSubCardLink.startsWith('Ranpur')) {
-                endpointRanpur = true;
+            const stokResponse = await fetch('/stokpusat/getBytipe/' + subSubCardLink);
+            if (!stokResponse.ok) {
+                throw new Error('Gagal mengambil data Stok.');
             }
-            if (subSubCardLink.startsWith('Stok')) {
-                endpointStok = true;
-            }
+            const stokData = await stokResponse.json();
     
-            // Variabel untuk menampung data
-            let ranpurData = [];
-            let stokData = [];
+            if (stokData.length > 0) {
+                stokData.forEach(stok => {
+                    const descriptionParts = stok.deskripsi
+                        ? stok.deskripsi.split('<hr>').map(part => part.trim())
+                        : [];
+                    let tabsHTML = '';
+                    let tabContentsHTML = '';
     
-            // Fetch data berdasarkan endpoint yang dipilih
-            if (endpointRanpur) {
-                // Ambil data Ranpur dari endpoint getByName
-                const ranpurResponse = await fetch('/wilayah/getByName/' + subSubCardLinkWithoutPrefix);
-                if (!ranpurResponse.ok) {
-                    throw new Error('Gagal mengambil data Ranpur.');
-                }
-                ranpurData = await ranpurResponse.json();
-            }
+                    descriptionParts.forEach((part, index) => {
+                        const tabId = `sheet-${stok.id}-${index}`;
+                        const tabName = `Sheet ${index + 1}`;
     
-            if (endpointStok) {
-                // Ambil data Stok dari endpoint getBytipe
-                const stokResponse = await fetch('/stokpusat/getBytipe/' + subSubCardLinkWithoutPrefix);
-                if (!stokResponse.ok) {
-                    throw new Error('Gagal mengambil data Stok.');
-                }
-                stokData = await stokResponse.json();
-            }
+                        tabsHTML += `
+                            <li class="nav-item">
+                                <a class="nav-link ${index === 0 ? 'active' : ''}" id="${tabId}-tab" data-bs-toggle="tab" href="#${tabId}" role="tab" aria-controls="${tabId}" aria-selected="${index === 0}">
+                                    ${tabName}
+                                </a>
+                            </li>
+                        `;
     
-            // Tampilkan data Ranpur jika ada
-            if (ranpurData.length > 0) {
-                ranpurData.forEach(ranpur => {
-                    const cardHTML = `
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubSubCards('${ranpur.nama_wilayah}')">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_wilayah}</div>
-                                        </div>
-                                    </div>
-                                </div>
+                        tabContentsHTML += `
+                            <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+                                ${part || `Konten untuk ${tabName} kosong`}
                             </div>
-                        </div>
-                    `;
-                    subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-                });
-            } 
+                        `;
+                    });
     
-// Tampilkan data stok jika ada
-if (stokData.length > 0) {
-    stokData.forEach(stok => {
-        // Membagi deskripsi berdasarkan <hr>
-        const descriptionParts = stok.deskripsi.split('<hr>');
-        let tabsHTML = '';
-        let tabContentsHTML = '';
-
-        descriptionParts.forEach((part, index) => {
-            const paragraphs = part.split('<p>').map(p => p.replace('</p>', '').trim()).filter(p => p).map(p => p);
-            const tabId = `sheet-${stok.id}-${index}`; // ID unik untuk tab
-            const tabName = `Sheet ${index + 1}`; // Nama tab (Sheet 1, Sheet 2, dst)
-            // const tabName = `${paragraphs}`; // Nama tab (Sheet 1, Sheet 2, dst)
-
-            // Tambahkan tab header
-            tabsHTML += `
-                <li class="nav-item">
-                    <a class="nav-link ${index === 0 ? 'active' : ''}" id="${tabId}-tab" data-toggle="tab" href="#${tabId}" role="tab" aria-controls="${tabId}" aria-selected="${index === 0}">
-                        ${tabName}
-                    </a>
-                </li>
-            `;
-
-            // Tambahkan tab content
-            tabContentsHTML += `
-                <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
-                    ${part || `Konten untuk ${tabName} kosong`}
-                </div>
-            `;
-        });
-
-        // Membuat card untuk stok
-        const cardHTML = `
-            <div class="lg-2 md-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <!-- Nama kategori -->
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">${stok.nama_kategori}</h5>
-                    </div>
-                    <!-- Tabs -->
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="stokTab${stok.id}" role="tablist">
-                            ${tabsHTML}
-                        </ul>
-                    </div>
-                    <!-- Tab contents -->
-                    <div class="card-body">
-                        <div class="tab-content" id="stokContent${stok.id}">
-                            ${tabContentsHTML}
-                        </div>
-                    </div>
+const cardHTML = `
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow h-100 py-2">
+            <label class="text-center">STOK DATA PUSAT</label>
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">${stok.nama_kategori}</h5>
+            </div>
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="stokTab${stok.id}" role="tablist">
+                    ${tabsHTML}
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="stokContent${stok.id}">
+                    <!-- Pencarian akan ditempatkan di sini -->
+                    <input type="text" id="searchInput${stok.id}" placeholder="Search..." style="margin-top: 10px;">
+                    ${tabContentsHTML}
                 </div>
             </div>
-        `;
-
-        // Menambahkan card HTML ke dalam container
-        subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-    });
-}
-
-    
+        </div>
+    </div>
+`;
+                    subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+                    document.querySelector(`#searchInput${stok.id}`).addEventListener('input', function() {
+                        let searchTerm = this.value.toLowerCase();
+                        let rows = document.querySelectorAll(`#stokContent${stok.id} #dataTable tbody tr`);
+                        rows.forEach(function(row) {
+                            let rowText = row.innerText.toLowerCase();
+                            if (rowText.indexOf(searchTerm) > -1) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
         } catch (error) {
-            console.error('Error fetching data:', error);
-            subSubSubCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
+            console.error(error.message);
+            alert('Terjadi kesalahan saat mengambil data stok.');
         }
-    }    
+    } 
 
     async function showSubSubSubSubCards(nama_wilayah) {
         const subSubSubSubCardsContainer = document.getElementById('sub-sub-sub-sub-cards');

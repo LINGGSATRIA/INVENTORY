@@ -37,27 +37,14 @@
             </datalist>
         </div>
 
-        <!-- Form for Wilayah -->
         <div class="mb-3">
-            <label for="wilayah" class="form-label">Wilayah</label>
-            <input type="text" name="wilayah" id="wilayah" class="form-control" placeholder="Cari atau Masukkan Wilayah" list="wilayah_list">
-            <datalist id="wilayah_list">
-                <?php foreach ($wilayah as $w): ?>
-                    <option value="<?= $w['nama_wilayah'] ?>"></option>
+            <label for="versi_ranpur" class="form-label">Versi Ranpur</label>
+            <input type="text" name="versi_ranpur" id="versi_ranpur" class="form-control" placeholder="Cari atau Masukkan Versi Ranpur" list="versi_list">
+            <datalist id="versi_list">
+                <?php foreach ($versi_ranpur as $v): ?>
+                    <option value="<?= $v['nama_versi'] ?>"></option>
                 <?php endforeach; ?>
             </datalist>
-        </div>
-
-        <!-- Form for Nama Ranpur -->
-        <div class="mb-3">
-            <label for="nama_ranpur" class="form-label">Nama Ranpur</label>
-            <input type="text" name="nama_ranpur" id="nama_ranpur" class="form-control" placeholder="Masukkan Nama Ranpur" required>
-        </div>
-
-        <!-- Form for Deskripsi -->
-        <div class="mb-3">
-            <label for="editor_content" class="form-label">Deskripsi</label>
-            <textarea name="editor_content" id="editor"></textarea>
         </div>
 
         <!-- Submit Button -->

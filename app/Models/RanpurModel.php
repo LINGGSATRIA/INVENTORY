@@ -8,16 +8,26 @@ class RanpurModel extends Model
 {
     protected $table = 'ranpur';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['id_jenis_ranpur', 'id_tipe_ranpur', 'id_wilayah', 'nama_ranpur', 'deskripsi'];
+    protected $allowedFields = ['id_jenis_ranpur', 'id_tipe_ranpur', 'id_versi_ranpur', 'deskripsi'];
 
-    // Method untuk mengambil data Ranpur berdasarkan nama tipe ranpur (Leopard, dsb.) dan join dengan tabel Wilayah
-    public function getByNameWithWilayah($namaTipeRanpur)
+
+    public function getTIpeBykategori($namaTipeRanpur)
     {
-        return $this->select('wilayah.nama_wilayah, tipe_ranpur.tipe_ranpur')
-            ->join('wilayah', 'ranpur.id_wilayah = wilayah.id')
+        return $this->select('jenis_ranpur.nama_ranpur, tipe_ranpur.tipe_ranpur')
+            ->join('jenis_ranpur', 'ranpur.id_jenis_ranpur = jenis_ranpur.id')
             ->join('tipe_ranpur', 'ranpur.id_tipe_ranpur = tipe_ranpur.id')
-            ->where('tipe_ranpur.tipe_ranpur', $namaTipeRanpur)
-            ->groupBy('wilayah.nama_wilayah') // Mengelompokkan data berdasarkan nama_wilayah
+            ->where('jenis_ranpur.nama_ranpur', $namaTipeRanpur)
+            ->groupBy('jenis_ranpur.nama_ranpur, tipe_ranpur.tipe_ranpur') 
+            ->findAll();
+    }
+    
+    public function getByNameWithVersi($namaVersiRanpur)
+    {
+        return $this->select('versi_ranpur.nama_versi, tipe_ranpur.tipe_ranpur')
+            ->join('versi_ranpur', 'ranpur.id_versi_ranpur = versi_ranpur.id')
+            ->join('tipe_ranpur', 'ranpur.id_tipe_ranpur = tipe_ranpur.id')
+            ->where('tipe_ranpur.tipe_ranpur', $namaVersiRanpur)
+            ->groupBy('versi_ranpur.nama_versi, tipe_ranpur.tipe_ranpur') 
             ->findAll();
     }
 
