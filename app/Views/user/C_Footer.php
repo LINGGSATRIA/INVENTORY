@@ -32,7 +32,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="userForm" action="<?= base_url('user/update'); ?>" method="POST">
+            <form id="userForm" action="<?= base_url('user/update/'); ?>" method="POST">
                 <div class="modal-body">
                     <input type="hidden" id="userId" name="userId">
                     <!-- Menampilkan Foto yang Sudah Ada (Jika Ada) -->
@@ -97,7 +97,7 @@
 <script>
     const editUser = () => {
         // Mengambil ID pengguna dari session
-        const userId = <?= session()->get('user_id') ?>; // Ambil ID pengguna dari session PHP
+        const userId = <?= session()->get('user_id') ?>; 
 
         fetch(`user/edit/${userId}`)
             .then(response => response.json())
@@ -112,10 +112,10 @@
                 if (data.foto) {
                     document.getElementById('currentPhoto').src = `/adminfoto/${data.foto}`;
                 } else {
-                    document.getElementById('currentPhoto').src = '<?= base_url('../img/undraw_profile_2.svg') ?>'; // Gambar default jika tidak ada
+                    document.getElementById('currentPhoto').src = '<?= base_url('../img/undraw_profile_2.svg') ?>'; 
                 }
 
-                document.getElementById('userForm').action = `user/update/${id}`;
+                document.getElementById('userForm').action = `update/${userId}`;
                 document.getElementById('submitButton').textContent = 'Update';
             });
     };

@@ -29,11 +29,11 @@
             ranpurData.forEach(ranpur => {
                 const cardHTML = `
                 <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubCards('${ranpur.tipe_ranpur}')">
+                <div class="card bg-success shadow h-100 py-2" onclick="showSubSubCards('${ranpur.tipe_ranpur}')">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.tipe_ranpur}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">${ranpur.tipe_ranpur}</div>
                                 </div>
                             </div>
                         </div>
@@ -77,11 +77,11 @@
             ranpurData.forEach(ranpur => {
                 const cardHTML = `
                 <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2" onclick="showSubSubSubCards('${ranpur.nama_versi}')">
+                <div class="card bg-warning shadow h-100 py-2" onclick="showSubSubSubCards('${ranpur.nama_versi}')">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${ranpur.nama_versi}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-white">${ranpur.nama_versi}</div>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,10 @@
                 throw new Error('Gagal mengambil data Stok.');
             }
             const stokData = await stokResponse.json();
-    
+            if (stokData.message === "Data tidak ditemukan") {
+                DeskripsiCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+                return;
+            }
             if (stokData.length > 0) {
                 stokData.forEach(stok => {
                     const descriptionParts = stok.deskripsi
@@ -138,7 +141,7 @@
                     });
     
 const cardHTML = `
-    <div class="col-lg-8 col-md-10">
+    <div class="col">
         <div class="card shadow h-100 py-2">
             <label class="text-center">STOK DATA PUSAT</label>
             <div class="card-header bg-success text-white">
@@ -224,65 +227,65 @@ const cardHTML = `
         }
     }
 
-    async function showDeskripsi(nama_ranpur, nama_wilayah) {
-        const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
-        DeskripsiCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
+    // async function showDeskripsi(nama_ranpur, nama_wilayah) {
+    //     const DeskripsiCardsContainer = document.getElementById('deskripsi-cards');
+    //     DeskripsiCardsContainer.innerHTML = ''; // Clear existing sub-sub-sub-cards
 
-        try {
-            // Fetch data Ranpur berdasarkan nama ranpur
-            const response = await fetch('/wilayah/getDeskripsi/?nama_ranpur=' + nama_ranpur +'&nama_wilayah='+ nama_wilayah);
-            // const response = await fetch(`<?= site_url('wilayah/getDeskripsi/') ?>?nama_ranpur=${nama_ranpur}&nama_wilayah=${nama_wilayah}`);
-            console.log(`<?= site_url('wilayah/getDeskripsi/') ?>?nama_ranpur=${nama_ranpur}&nama_wilayah=${nama_wilayah}`);
+    //     try {
+    //         // Fetch data Ranpur berdasarkan nama ranpur
+    //         const response = await fetch('/wilayah/getDeskripsi/?nama_ranpur=' + nama_ranpur +'&nama_wilayah='+ nama_wilayah);
+    //         // const response = await fetch(`<?= site_url('wilayah/getDeskripsi/') ?>?nama_ranpur=${nama_ranpur}&nama_wilayah=${nama_wilayah}`);
+    //         console.log(`<?= site_url('wilayah/getDeskripsi/') ?>?nama_ranpur=${nama_ranpur}&nama_wilayah=${nama_wilayah}`);
 
-            if (!response.ok) {
-                throw new Error(`Error fetching data: ${response.status}`);
-            }
+    //         if (!response.ok) {
+    //             throw new Error(`Error fetching data: ${response.status}`);
+    //         }
 
-            const ranpurData = await response.json();
+    //         const ranpurData = await response.json();
 
-            if (ranpurData.length === 0) {
-                DeskripsiCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
-                return;
-            }
+    //         if (ranpurData.length === 0) {
+    //             DeskripsiCardsContainer.innerHTML = '<p>Data tidak ditemukan.</p>';
+    //             return;
+    //         }
 
-            // Generate sub-sub-sub-cards HTML dynamically berdasarkan data ranpur dan wilayah
-            ranpurData.forEach(ranpur => {
-                const deskripsiParts = ranpur.deskripsi.split('<hr>'); // Pisahkan deskripsi di frontend jika perlu
-                const sheet1 = deskripsiParts[0] || 'Sheet 1 kosong';
-                const sheet2 = deskripsiParts[1] || 'Sheet 2 kosong';
+    //         // Generate sub-sub-sub-cards HTML dynamically berdasarkan data ranpur dan wilayah
+    //         ranpurData.forEach(ranpur => {
+    //             const deskripsiParts = ranpur.deskripsi.split('<hr>'); // Pisahkan deskripsi di frontend jika perlu
+    //             const sheet1 = deskripsiParts[0] || 'Sheet 1 kosong';
+    //             const sheet2 = deskripsiParts[1] || 'Sheet 2 kosong';
 
-                const cardHTML = `
-    <div class="container-fluid">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs" id="ranpurTab${ranpur.id}" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="sheet1-tab-${ranpur.id}" data-toggle="tab" href="#sheet1-${ranpur.id}" role="tab" aria-controls="sheet1-${ranpur.id}" aria-selected="true">Data Awal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="sheet2-tab-${ranpur.id}" data-toggle="tab" href="#sheet2-${ranpur.id}" role="tab" aria-controls="sheet2-${ranpur.id}" aria-selected="false">Kebutuhan</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="ranpurContent${ranpur.id}">
-                    <!-- Sheet 1 -->
-                    <div class="tab-pane fade show active" id="sheet1-${ranpur.id}" role="tabpanel" aria-labelledby="sheet1-tab-${ranpur.id}">
-                        ${sheet1}
-                    </div>
-                    <!-- Sheet 2 -->
-                    <div class="tab-pane fade" id="sheet2-${ranpur.id}" role="tabpanel" aria-labelledby="sheet2-tab-${ranpur.id}">
-                        ${sheet2}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
-                DeskripsiCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
-            });
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            DeskripsiCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
-        }
-    }
+    //             const cardHTML = `
+    // <div class="container-fluid">
+    //     <div class="card border-left-primary shadow h-100 py-2">
+    //         <div class="card-header">
+    //             <ul class="nav nav-tabs card-header-tabs" id="ranpurTab${ranpur.id}" role="tablist">
+    //                 <li class="nav-item">
+    //                     <a class="nav-link active" id="sheet1-tab-${ranpur.id}" data-toggle="tab" href="#sheet1-${ranpur.id}" role="tab" aria-controls="sheet1-${ranpur.id}" aria-selected="true">Data Awal</a>
+    //                 </li>
+    //                 <li class="nav-item">
+    //                     <a class="nav-link" id="sheet2-tab-${ranpur.id}" data-toggle="tab" href="#sheet2-${ranpur.id}" role="tab" aria-controls="sheet2-${ranpur.id}" aria-selected="false">Kebutuhan</a>
+    //                 </li>
+    //             </ul>
+    //         </div>
+    //         <div class="card-body">
+    //             <div class="tab-content" id="ranpurContent${ranpur.id}">
+    //                 <!-- Sheet 1 -->
+    //                 <div class="tab-pane fade show active" id="sheet1-${ranpur.id}" role="tabpanel" aria-labelledby="sheet1-tab-${ranpur.id}">
+    //                     ${sheet1}
+    //                 </div>
+    //                 <!-- Sheet 2 -->
+    //                 <div class="tab-pane fade" id="sheet2-${ranpur.id}" role="tabpanel" aria-labelledby="sheet2-tab-${ranpur.id}">
+    //                     ${sheet2}
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // </div>
+    // `;
+    //             DeskripsiCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+    //         });
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //         DeskripsiCardsContainer.innerHTML = '<p>Terjadi kesalahan saat mengambil data.</p>';
+    //     }
+    // }
