@@ -4,7 +4,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; SILEO</span>
+            <span>Copyright &copy; SISFO SUCAD LEO</span>
         </div>
     </div>
 </footer>
@@ -81,7 +81,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Yakin Keluar ?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Yakin Keluar?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

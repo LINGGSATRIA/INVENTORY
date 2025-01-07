@@ -141,7 +141,7 @@ const cardHTML = `
     <div class="col-lg-8 col-md-10">
         <div class="card shadow h-100 py-2">
             <label class="text-center">STOK DATA PUSAT</label>
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-success text-white">
                 <h5 class="mb-0">${stok.nama_kategori}</h5>
             </div>
             <div class="card-header">
