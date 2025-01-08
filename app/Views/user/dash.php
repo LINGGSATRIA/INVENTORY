@@ -77,12 +77,13 @@
         </div>
     </div>
 
-    <!-- Dynamic Content Sections -->
-    <div id="sub-cards" class="row g-4 mt-4 fade-in"></div>
-    <div id="sub-sub-cards" class="row g-4 mt-4 fade-in"></div>
-    <div id="sub-sub-sub-cards" class="row g-4 mt-4 fade-in"></div>
-    <div id="sub-sub-sub-sub-cards" class="row g-4 mt-4 fade-in"></div>
-    <div id="deskripsi-cards" class="row g-4 mt-4 fade-in"></div>
+    <div id="sub-cards" class="row mt-4 fade-in"></div>
+    <div id="sub-sub-cards" class="row mt-4 fade-in"></div>
+    <div id="show-Sucad-Boxes" class="row mt-4 fade-in"></div>
+    <div id="sub-sub-sub-cards" class="row mt-4 fade-in"></div>
+    <div id="wilayah-boxes" class="row mt-4 fade-in"></div>
+    <div id="sub-sub-sub-sub-cards" class="row mt-4 fade-in"></div>
+    <div id="deskripsi-cards" class="row mt-4 fade-in"></div>
 
     <style>
         .hover-card {
