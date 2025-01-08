@@ -9,7 +9,7 @@
     <meta name="author" content="SILEO">
     <link rel="icon" href="<?= base_url('img/tank1.ico'); ?>" type="image/x-icon">
 
-    <title>SILEO - Sistem Informasi Logistik Elektronik Operasional</title>
+    <title>SILEO - Sistem Informasi Leopard</title>
 
     <!-- Custom fonts -->
     <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet">
