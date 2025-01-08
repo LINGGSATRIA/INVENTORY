@@ -4,14 +4,18 @@ async function showSubCards(type) {
         subSub: document.getElementById('sub-sub-cards'),
         subSubSub: document.getElementById('sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
+        showSucadBoxes: document.getElementById('show-Sucad-Boxes')
     };
 
     // Bersihkan semua container dengan efek fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     try {
@@ -85,14 +89,17 @@ async function showSubSubCards(subCardName) {
         subSubSub: document.getElementById('sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes')
     };
 
     // Clear dengan efek fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     try {
@@ -134,16 +141,17 @@ async function showSucadBoxes(subSubCardLink) {
         subSubSub: document.getElementById('sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes')
     };
-    const show = {
-        showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
-    };
+    
     // Clear containers dengan fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     const boxesHTML = `
@@ -177,15 +185,25 @@ async function showSucadBoxes(subSubCardLink) {
         </div>
     `;
 
-    show.showSucadBoxes.innerHTML = boxesHTML;
+    containers.showSucadBoxes.innerHTML = boxesHTML;
 }
 
 async function showSubSubSubCards(subSubCardLink) {
     const containers = {
         subSubSub: document.getElementById('sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
     };
+
+    // Clear containers dengan fade
+    Object.values(containers).forEach(container => {
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
+    });
 
     try {
         const stokResponse = await fetch('/stokpusat/getBytipe/' + subSubCardLink);
@@ -294,14 +312,18 @@ async function showSubSubSubCards(subSubCardLink) {
 async function showSubSubSubSubCards(nama_wilayah) {
     const containers = {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
+        deskripsi: document.getElementById('deskripsi-cards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
         deskripsi: document.getElementById('deskripsi-cards')
     };
 
     // Clear dengan efek fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     try {
@@ -339,20 +361,24 @@ async function showSubSubSubSubCards(nama_wilayah) {
         console.error('Error:', error);
         containers.subSubSubSub.innerHTML = '<div class="alert alert-danger fade-in">Terjadi kesalahan saat mengambil data</div>';
     }
-
 }
 
 async function showWilayahBoxes(wilayahlink) {
     const containers = {
         wilayahBoxes: document.getElementById('wilayah-boxes'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        subSubSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
+        subSubSubSub: document.getElementById('sub-sub-sub-cards'),
+        
     };
 
     // Clear containers dengan fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     try {
@@ -395,14 +421,15 @@ async function showWilayahBoxes(wilayahlink) {
 async function showSubWilayahBoxes(nama_wilayah) {
     const containers = {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
-        deskripsi: document.getElementById('deskripsi-cards')
     };
 
     // Clear dengan efek fade
     Object.values(containers).forEach(container => {
-        container.style.opacity = '0';
-        container.innerHTML = '';
-        setTimeout(() => container.style.opacity = '1', 100);
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => container.style.opacity = '1', 100);
+        }
     });
 
     try {
