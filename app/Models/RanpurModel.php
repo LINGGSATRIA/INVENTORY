@@ -8,7 +8,7 @@ class RanpurModel extends Model
 {
     protected $table = 'ranpur';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['id_jenis_ranpur', 'id_tipe_ranpur', 'id_versi_ranpur', 'deskripsi'];
+    protected $allowedFields = ['id_jenis_ranpur', 'id_tipe_ranpur', 'id_versi_ranpur', 'id_wilayah', 'sub_wilayah', 'deskripsi'];
 
 
     public function getTIpeBykategori($namaTipeRanpur)
@@ -32,12 +32,12 @@ class RanpurModel extends Model
     }
 
 
-    public function getRanpurByWilayah($namaWilayah)
+    public function getSubWilayahByWilayah($namaWilayah)
     {
-        return $this->select('ranpur.nama_ranpur, wilayah.nama_wilayah') // Memilih kolom nama_ranpur dan nama_wilayah
-            ->join('wilayah', 'ranpur.id_wilayah = wilayah.id') // Join tabel wilayah
-            ->where('wilayah.nama_wilayah', $namaWilayah) // Filter berdasarkan nama_wilayah
-            ->findAll(); // Mengambil semua hasil
+        return $this->select('ranpur.sub_wilayah, wilayah.nama_wilayah')
+            ->join('wilayah', 'ranpur.id_wilayah = wilayah.id')
+            ->where('wilayah.nama_wilayah', $namaWilayah)
+            ->findAll();
     }
 
     public function getDeskripsi($nama_ranpur, $nama_wilayah)
@@ -49,5 +49,14 @@ class RanpurModel extends Model
             ->findAll();
     }
 
+    public function getRanpurByWilayah($nama_versi)
+    {
+        return $this->select('versi_ranpur.nama_versi, wilayah.nama_wilayah')
+            ->join('wilayah', 'ranpur.id_wilayah = wilayah.id')
+            ->join('versi_ranpur', 'ranpur.id_versi_ranpur = versi_ranpur.id')
+            ->where('versi_ranpur.nama_versi', $nama_versi)
+            ->groupBy('versi_ranpur.nama_versi, wilayah.nama_wilayah') // Tambahkan GROUP BY jika diperlukan
+            ->findAll();
+    }    
     
 }

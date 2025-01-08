@@ -36,5 +36,6 @@ $routes->get('/wilayah/getTIpeBykategori/(:any)', 'Home::getTIpeBykategori/$1', 
 $routes->get('/wilayah/getByNameWithVersi/(:any)', 'Home::getByNameWithVersi/$1', ['filter' => 'auth']);
 $routes->get('/wilayah/getByName/(:any)', 'Home::getByName/$1', ['filter' => 'auth']);
 $routes->get('/wilayah/getByWilayah/(:any)', 'Home::getByWilayah/$1', ['filter' => 'auth']);
+$routes->get('/wilayah/getSubWilayahByWilayah/(:any)', 'Home::getSubWilayahByWilayah/$1', ['filter' => 'auth']);
 $routes->get('/wilayah/getDeskripsi', 'Home::getDeskripsi', ['filter' => 'auth']);
 $routes->get('stokpusat/getBytipe/(:any)', 'Home::getBytipe/$1', ['filter' => 'auth']);

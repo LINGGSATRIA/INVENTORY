@@ -93,17 +93,35 @@ class Home extends BaseController
     }
 
 
-    public function getByWilayah($namaWilayah)
+    public function getByWilayah($nama_versi)
     {
         $ranpurModel = new RanpurModel();
 
         // Ambil data Ranpur beserta informasi Wilayah
-        $dataRanpur = $ranpurModel->getRanpurByWilayah($namaWilayah);
+        $dataRanpur = $ranpurModel->getRanpurByWilayah($nama_versi);
 
         // Kembalikan data dalam format JSON
         return $this->response->setJSON($dataRanpur);
     }
 
+    public function getSubWilayahByWilayah($nama_wilayah)
+    {
+        $ranpurModel = new RanpurModel();
+
+        // Ambil data Ranpur berdasarkan wilayah
+        $dataRanpur = $ranpurModel->getSubWilayahByWilayah($nama_wilayah);
+
+        // Cek jika data kosong
+        if (empty($dataRanpur)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan untuk wilayah tersebut'
+            ]);
+        }
+
+        // Kembalikan data dalam format JSON
+        return $this->response->setJSON($dataRanpur);
+    }
 
     public function getDeskripsi()
     {

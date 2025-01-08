@@ -10,81 +10,138 @@
 
     <title>SILEO</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles -->
     <link href="<?= base_url("Assets/sbadmin/login.css") ?>" rel="stylesheet">
     <link href="<?= base_url("Assets/sbadmin/tambahan.css") ?>" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            height: 100vh;
+        }
+        .card {
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #26d0ce;
+            box-shadow: 0 0 0 0.2rem rgba(38, 208, 206, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo-container img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+        .tank-image {
+            width: 100px;
+            animation: moveRight 2s infinite linear;
+        }
+        @keyframes moveRight {
+            from { transform: translateX(-100px); }
+            to { transform: translateX(100px); }
+        }
+    </style>
 </head>
 
-<body class="bg-image bg-blur">
+<body>
     <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-xl-4 col-lg-6 col-md-8">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <div class="logo-container">
+                            <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" alt="SILEO Logo">
+                            <h1 class="h3 text-dark font-weight-bold">SI LEO</h1>
+                            <p class="text-muted">Selamat datang kembali</p>
+                        </div>
 
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
+                        <?php if ($errors = session()->getFlashdata('error')): ?>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <?php if (is_array($errors)): ?>
+                                    <ul class="mb-0">
+                                        <?php foreach ($errors as $error): ?>
+                                            <li><?= esc($error) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php else: ?>
+                                    <?= esc($errors) ?>
+                                <?php endif; ?>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php endif; ?>
 
-            <div class="col-xl-4 col-lg-6 col-md-3 mt-5">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">SI LEO</h1>
+                        <form action="<?= site_url('auth/authenticate') ?>" method="POST">
+                            <div class="form-group mb-4">
+                                <label class="text-muted">Email</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <?php if ($errors = session()->getFlashdata('error')): ?>
-                                        <div class="alert alert-danger">
-                                            <?php if (is_array($errors)): ?>
-                                                <ul>
-                                                    <?php foreach ($errors as $error): ?>
-                                                        <li><?= esc($error) ?></li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            <?php else: ?>
-                                                <?= esc($errors) ?>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <!-- Form login -->
-                                    <form action="<?= site_url('auth/authenticate') ?>" method="POST" class="user">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" name="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Password" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-user btn-block">Login</button>
-                                        <!-- Animasi Tank -->
-                                        <div id="loading-animation" style="display: none; position: fixed; top: 50%; left: 40%; transform: translate(-50%, -50%); z-index: 9999;">
-                                            <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
-                                        </div>
-                                    </form>
-
+                                    <input type="email" class="form-control" name="email" placeholder="Masukkan email anda" required>
                                 </div>
                             </div>
+                            <div class="form-group mb-4">
+                                <label class="text-muted">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control" name="password" placeholder="Masukkan password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-login btn-block">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+                            </button>
+                        </form>
+
+                        <!-- Animasi Tank -->
+                        <div id="loading-animation" style="display: none; text-align: center; margin-top: 20px;">
+                            <img src="<?= base_url('Assets/sbadmin/img/tank.png') ?>" alt="Loading Tank" class="tank-image">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
         document.querySelector("form").addEventListener("submit", function(event) {
-            // Mencegah pengiriman form default
             event.preventDefault();
-
-            // Tampilkan animasi tank
             document.getElementById("loading-animation").style.display = "block";
-
-            // Simulasikan proses login
             setTimeout(() => {
-                this.submit(); // Kirim form setelah animasi selesai
-            }, 2000); // Durasi animasi (ms)
+                this.submit();
+            }, 2000);
         });
     </script>
 </body>
