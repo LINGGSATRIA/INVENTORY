@@ -1,12 +1,16 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center py-4" href="index.html">
         <div class="sidebar-brand-icon">
             <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" class="img-fluid hover-scale" style="width: 50px; transition: all 0.3s ease;" alt="logo">
         </div>
+<<<<<<< HEAD
         <div class="sidebar-brand-text ms-3 fw-bold" style="font-size: 1.5rem; letter-spacing: 2px;">SILEO</div>
+=======
+        <div class="sidebar-brand-text mx-3"></div>SISFO SUCAD LEO
+>>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
     </a>
 
     <!-- Divider -->

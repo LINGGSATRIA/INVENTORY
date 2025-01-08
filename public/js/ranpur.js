@@ -230,50 +230,38 @@ async function showSubSubSubCards(subSubCardLink) {
                             <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
                                 <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-light" style="border-radius: 10px 0 0 10px">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                    <input type="text" 
-                                           class="form-control search-input" 
-                                           data-target="${stok.id}"
-                                           data-kategori="${stok.nama_kategori}"
-                                           placeholder="Cari data..."
-                                           style="border-radius: 0 10px 10px 0">
-                                </div>
-                                <ul class="nav nav-tabs" role="tablist">
-                                    ${tabsHTML}
-                                </ul>
-                                <div class="tab-content mt-3">
-                                    ${tabContentsHTML}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                containers.subSubSub.insertAdjacentHTML('beforeend', cardHTML);
-            });
-
-            // Implementasi pencarian
-            document.querySelectorAll('.search-input').forEach(input => {
-                input.addEventListener('input', function () {
-                    const searchTerm = this.value.toLowerCase();
-                    const stokId = this.getAttribute('data-target');
-                    const kategori = this.getAttribute('data-kategori');
-
-                    const cardContainer = this.closest('.card');
-                    const tables = cardContainer.querySelectorAll(`#sheet-${stokId}-0 table, #sheet-${stokId}-1 table, #sheet-${stokId}-2 table`);
-
-                    tables.forEach(table => {
-                        const rows = table.querySelectorAll('tr');
-                        rows.forEach((row, index) => {
-                            if (index === 0) return;
-
-                            const text = row.textContent.toLowerCase();
-                            row.style.transition = 'opacity 0.3s ease';
-                            if (text.includes(searchTerm)) {
+                        `;
+                    });
+    
+const cardHTML = `
+    <div class="col">
+        <div class="card shadow h-100 py-2">
+            <label class="text-center">STOK DATA PUSAT</label>
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">${stok.nama_kategori}</h5>
+            </div>
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="stokTab${stok.id}" role="tablist">
+                    ${tabsHTML}
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="stokContent${stok.id}">
+                    <!-- Pencarian akan ditempatkan di sini -->
+                    <input type="text" id="searchInput${stok.id}" placeholder="Search..." style="margin-top: 10px;">
+                    ${tabContentsHTML}
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+                    subSubSubCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+                    document.querySelector(`#searchInput${stok.id}`).addEventListener('input', function() {
+                        let searchTerm = this.value.toLowerCase();
+                        let rows = document.querySelectorAll(`#stokContent${stok.id} #dataTable tbody tr`);
+                        rows.forEach(function(row) {
+                            let rowText = row.innerText.toLowerCase();
+                            if (rowText.indexOf(searchTerm) > -1) {
                                 row.style.display = '';
                                 row.style.opacity = '1';
                             } else {

@@ -5,7 +5,11 @@
 <footer class="sticky-footer bg-gradient-light shadow-sm">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
+<<<<<<< HEAD
             <span class="text-primary font-weight-bold">Copyright &copy; SILEO <?= date('Y') ?></span>
+=======
+            <span>Copyright &copy; SISFO SUCAD LEO</span>
+>>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
         </div>
     </div>
 </footer>
@@ -77,12 +81,21 @@
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
+<<<<<<< HEAD
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-gradient-light border-bottom-0">
                 <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">Konfirmasi Keluar</h5>
                 <button class="close hover-scale" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-primary">&times;</span>
+=======
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Yakin Keluar?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+>>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
                 </button>
             </div>
             <div class="modal-body text-center">
