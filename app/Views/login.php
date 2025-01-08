@@ -101,25 +101,12 @@
                             </div>
                         <?php endif; ?>
 
-<<<<<<< HEAD
                         <form action="<?= site_url('auth/authenticate') ?>" method="POST">
                             <div class="form-group mb-4">
                                 <label class="text-muted">Email</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-=======
-            <div class="col-xl-4 col-lg-6 col-md-3 mt-5">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">SISFO SUCAD LEO</h1>
->>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
                                     </div>
                                     <input type="email" class="form-control" name="email" placeholder="Masukkan email anda" required>
                                 </div>

@@ -9,11 +9,7 @@
     <meta name="author" content="SILEO">
     <link rel="icon" href="<?= base_url('img/tank1.ico'); ?>" type="image/x-icon">
 
-<<<<<<< HEAD
     <title>SILEO - Sistem Informasi Leopard</title>
-=======
-    <title>SISFO SUCAD LEO</title>
->>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
 
     <!-- Fonts -->
     <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet">
