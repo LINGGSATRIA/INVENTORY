@@ -144,7 +144,7 @@ async function showSucadBoxes(subSubCardLink) {
         deskripsi: document.getElementById('deskripsi-cards'),
         wilayahBoxes: document.getElementById('wilayah-boxes')
     };
-    
+
     // Clear containers dengan fade
     Object.values(containers).forEach(container => {
         if (container) {
@@ -363,13 +363,13 @@ async function showSubSubSubSubCards(nama_wilayah) {
     }
 }
 
-async function showWilayahBoxes(wilayahlink) {
+async function showWilayahBoxes(wilayahlink, nama_versi) {
     const containers = {
         wilayahBoxes: document.getElementById('wilayah-boxes'),
         deskripsi: document.getElementById('deskripsi-cards'),
         subSubSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-cards'),
-        
+
     };
 
     // Clear containers dengan fade
@@ -394,7 +394,7 @@ async function showWilayahBoxes(wilayahlink) {
         const boxesHTML = wilayahData.map((wilayah, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showSubWilayahBoxes('${wilayah.nama_wilayah}')"
+                     onclick="showSubWilayahBoxes('${wilayah.nama_wilayah}', '${wilayah.nama_versi}')"
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-info" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -445,7 +445,7 @@ async function showSubWilayahBoxes(nama_wilayah) {
         const cardsHTML = subWilayahData.map((subWilayah, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showDeskripsi('${subWilayah.sub_wilayah}', '${subWilayah.sub_wilayah}')"
+                     onclick="deskripsipersubwilayah('${subWilayah.nama_versi}', '${subWilayah.sub_wilayah}')"
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-light" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -468,3 +468,115 @@ async function showSubWilayahBoxes(nama_wilayah) {
         containers.subSubSubSub.innerHTML = '<div class="alert alert-danger fade-in">Terjadi kesalahan saat mengambil data sub wilayah</div>';
     }
 }
+
+async function deskripsipersubwilayah(nama_versi, subwilayah) {
+    const containers = {
+        subSubSub: document.getElementById('sub-sub-sub-cards'),
+        deskripsicardcontainer: document.getElementById('deskripsi-cards'),
+    };
+
+    // Clear containers dengan fade
+    Object.values(containers).forEach(container => {
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => (container.style.opacity = '1'), 100);
+        }
+    });
+
+    try {
+        const stokResponse = await fetch('/stokpusat/getBytipe/' + nama_versi);
+        if (!stokResponse.ok) throw new Error('Gagal mengambil data Stok.');
+
+        const stokData = await stokResponse.json();
+        if (stokData.message === "Data tidak ditemukan") {
+            containers.deskripsicardcontainer.innerHTML = '<div class="alert alert-info fade-in">Data tidak ditemukan</div>';
+            return;
+        }
+
+        if (stokData.length > 0) {
+            stokData.forEach((stok, index) => {
+                const descriptionParts = stok.deskripsi ? stok.deskripsi.split('<hr>').map(part => part.trim()) : [];
+
+                const tabContentsHTML = descriptionParts.map((part, partIndex) => {
+                    // Parse konten tabel
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(part, "text/html");
+                    const table = doc.querySelector("table");
+
+                    if (table) {
+                        const headers = table.querySelectorAll("thead th");
+                        const rows = table.querySelectorAll("tbody tr");
+                        subwilayah = subwilayah.toLowerCase();
+
+                        const validColumns = ["no. seri sukcad", "nama sukcad", "jenis sukcad", subwilayah];
+                        const columnIndexes = Array.from(headers)
+                            .map((header, index) => {
+                                const headerText = header.textContent.trim().toLowerCase();
+                                return validColumns.includes(headerText) ? index : -1;
+                            })
+                            .filter(index => index !== -1);
+
+                        // Sembunyikan header yang tidak valid
+                        headers.forEach((header, index) => {
+                            if (!columnIndexes.includes(index)) header.style.display = "none";
+                        });
+
+                        // Sembunyikan sel pada setiap baris yang tidak valid
+                        rows.forEach(row => {
+                            const cells = row.querySelectorAll("td");
+                            cells.forEach((cell, index) => {
+                                if (!columnIndexes.includes(index)) cell.style.display = "none";
+                            });
+                        });
+                    }
+
+                    return `
+                        <div class="tab-pane fade ${partIndex === 0 ? "show active" : ""}" 
+                             id="sheet-${stok.id}-${partIndex}" 
+                             role="tabpanel"
+                             style="animation: fadeIn 0.3s ease-out">
+                            ${table ? table.outerHTML : `Konten untuk Sheet ${partIndex + 1} kosong`}
+                        </div>
+                    `;
+                }).join("");
+
+                const cardHTML = `
+                    <div class="col" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
+                        <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
+                            <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
+                                <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    ${descriptionParts.map((_, partIndex) => `
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link ${partIndex === 0 ? "active" : ""}" 
+                                                    id="sheet-${stok.id}-${partIndex}-tab" 
+                                                    data-bs-toggle="tab" 
+                                                    data-bs-target="#sheet-${stok.id}-${partIndex}" 
+                                                    type="button" 
+                                                    role="tab"
+                                                    style="border-radius: 10px 10px 0 0">
+                                                Sheet ${partIndex + 1}
+                                            </button>
+                                        </li>
+                                    `).join("")}
+                                </ul>
+                                <div class="tab-content mt-3">
+                                    ${tabContentsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                containers.deskripsicardcontainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        containers.deskripsicardcontainer.innerHTML = '<div class="alert alert-danger fade-in">Terjadi kesalahan saat mengambil data stok</div>';
+    }
+}
+

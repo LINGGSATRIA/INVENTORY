@@ -34,7 +34,8 @@ class RanpurModel extends Model
 
     public function getSubWilayahByWilayah($namaWilayah)
     {
-        return $this->select('ranpur.sub_wilayah, wilayah.nama_wilayah')
+        return $this->select('ranpur.sub_wilayah, wilayah.nama_wilayah, versi_ranpur.nama_versi')
+            ->join('versi_ranpur', 'versi_ranpur.id = ranpur.id_versi_ranpur')
             ->join('wilayah', 'ranpur.id_wilayah = wilayah.id')
             ->where('wilayah.nama_wilayah', $namaWilayah)
             ->findAll();

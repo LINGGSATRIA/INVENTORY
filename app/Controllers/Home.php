@@ -123,6 +123,30 @@ class Home extends BaseController
         return $this->response->setJSON($dataRanpur);
     }
 
+    public function getByWilayahSubWilayah($wilayah)
+    {
+        try {
+            // Ambil data stok berdasarkan wilayah dan sub wilayah
+            $stokData = $this->stokDataModel->getByWilayahSubWilayah($wilayah);
+
+            // Cek jika data kosong
+            if (empty($stokData)) {
+                return $this->response->setJSON([
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+
+            // Kembalikan data dalam format JSON
+            return $this->response->setJSON($stokData);
+
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage()
+            ]);
+        }
+    }
+
     public function getDeskripsi()
     {
         $nama_ranpur = $this->request->getGet('nama_ranpur');

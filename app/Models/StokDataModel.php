@@ -34,6 +34,19 @@ class StokDataModel extends Model
             ->where('LOWER(kategori.nama_kategori)', strtolower($namaKategori))
             ->first();
     }
-    
-    
+
+    public function getByWilayahSubWilayah($wilayah)
+    {
+        // Cek jika null, beri nilai default
+        $wilayah = $wilayah ?? '';
+        $subWilayah = $subWilayah ?? '';
+
+        return $this->select('kategori_stok.*, kategori.nama_kategori, kategori_stok.Deskripsi as deskripsi, ranpur.sub_wilayah, ranpur.id_wilayah, versi_ranpur.nama_versi')
+            ->join('versi_ranpur', 'versi_ranpur.id = kategori_stok.id_versi_ranpur')
+            ->join('kategori', 'kategori.id = kategori_stok.id_kategori')
+            ->join('wilayah', 'wilayah.id = kategori_stok.id_kategori')
+            ->join('ranpur', 'ranpur.id_versi_ranpur = versi_ranpur.id')
+            ->where('LOWER(ranpur.wilayah)', strtolower($wilayah))
+            ->findAll();
+    }
 }
