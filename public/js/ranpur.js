@@ -509,7 +509,7 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
                         const rows = table.querySelectorAll("tbody tr");
                         subwilayah = subwilayah.toLowerCase();
 
-                        const validColumns = ["no. seri sukcad", "nama sukcad", "jenis sukcad", subwilayah];
+                        const validColumns = ["part number", "jenis sucad", "nama sucad", subwilayah];
                         const columnIndexes = Array.from(headers)
                             .map((header, index) => {
                                 const headerText = header.textContent.trim().toLowerCase();
