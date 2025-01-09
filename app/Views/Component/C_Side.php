@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon">
             <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" class="img-fluid hover-scale" style="width: 50px; transition: all 0.3s ease; filter: drop-shadow(0 0 3px rgba(255,255,255,0.3));" alt="logo">
         </div>
-        <div class="sidebar-brand-text ms-3 fw-bold" style="font-size: 1.5rem; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">SILEO</div>
+        <div class="sidebar-brand-text ms-3 fw-bold" style="font-size: 1rem; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">SISFO SUCAD LEO</div>
     </a>
 
     <!-- Divider -->

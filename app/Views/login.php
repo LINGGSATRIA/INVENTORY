@@ -80,7 +80,7 @@
                     <div class="card-body p-5">
                         <div class="logo-container">
                             <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" alt="SILEO Logo">
-                            <h1 class="h3 text-dark font-weight-bold">SI LEO</h1>
+                            <h1 class="h3 text-dark font-weight-bold">SISFO SUCAD LEO</h1>
                             <p class="text-muted">Selamat datang kembali</p>
                         </div>
 
