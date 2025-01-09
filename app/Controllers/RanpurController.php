@@ -47,10 +47,10 @@ class RanpurController extends BaseController
         $namaWilayah = $this->request->getPost('nama_wilayah');
         $subWilayah = $this->request->getPost('sub_wilayah');
 
-        // Cek jika salah satu data kosong
-        if (empty($jenisRanpur) || empty($tipeRanpur) || empty($versiRanpur) || empty($namaWilayah) || empty($subWilayah)) {
-            return redirect()->back()->with('error', 'Semua field harus diisi.');
-        }
+        // // Cek jika salah satu data kosong
+        // if (empty($jenisRanpur) || empty($tipeRanpur) || empty($versiRanpur) || empty($namaWilayah) || empty($subWilayah)) {
+        //     return redirect()->back()->with('error', 'Semua field harus diisi.');
+        // }
 
         // Cek atau simpan jenis ranpur
         if ($jenisRanpur) {

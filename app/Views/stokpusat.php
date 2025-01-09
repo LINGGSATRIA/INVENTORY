@@ -98,16 +98,16 @@
                         <table class="table table-bordered" id="dataTable" style="width:100%">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>No. Seri Sukcad</th>
-                                    <th>Jenis Sukcad</th>
-                                    <th>Nama Sukcad</th>
-                                    <th>Yonkav I</th>
+                                    <th>Part Number</th>
+                                    <th>Jenis Sucad</th>
+                                    <th>Nama Sucad</th>
+                                    <th>Yonkav 1</th>
                                     <th>Yonkav 8</th>
                                     <th>Pusdikkav</th>
                                     <th>Kikav Puslatpur</th>
                                     <th>Bengpuskav</th>
                                     <th>Gupusran</th>
-                                    <th>Total Sukcad</th>
+                                    <th>Total Sucad</th>
                                 </tr>
                             </thead>
                             <tbody>
