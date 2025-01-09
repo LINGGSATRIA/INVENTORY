@@ -26,7 +26,7 @@
         </div>
 
         <!-- Card Ranpur Angkut Personel -->
-        <div class="col-xl-3 col-md-6">
+        <!-- <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('personel')">
                 <div class="card-body bg-gradient-success text-white rounded-4">
                     <div class="row no-gutters align-items-center">
@@ -42,8 +42,8 @@
             </div>
         </div>
 
-        <!-- Card Ranpur Intai -->
-        <div class="col-xl-3 col-md-6">
+        <-- Card Ranpur Intai -->
+        <!-- <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('intai')">
                 <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
@@ -57,10 +57,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Card Ranpur Pendukung -->
-        <div class="col-xl-3 col-md-6">
+        <!-- <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('pendukung')">
                 <div class="card-body bg-gradient-warning text-white rounded-4">
                     <div class="row no-gutters align-items-center">
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-auto">
                             <img src="<?= base_url('Assets/sbadmin/img/pendukung.png') ?>" class="img-fluid" style="width: 50px; height: auto; filter: brightness(0) invert(1);" alt="pendukung">
-                        </div>
+                        </div>  -->
                     </div>
                 </div>
             </div>

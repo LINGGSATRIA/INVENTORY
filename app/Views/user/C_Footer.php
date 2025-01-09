@@ -5,7 +5,7 @@
 <footer class="sticky-footer bg-gradient-light shadow-sm">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span class="text-primary font-weight-bold">Copyright &copy; Sistem Informas Suku Cadang Leopard <?= date('Y') ?></span>
+            <span class="text-primary font-weight-bold">Copyright &copy; Sistem Informasi Suku Cadang Leopard <?= date('Y') ?></span>
         </div>
     </div>
 </footer>

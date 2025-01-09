@@ -30,7 +30,7 @@
                 <i class="fas fa-database me-3"></i>
                 <span class="fw-medium">Master Data</span>
             </div>
-        </a>
+        </a>  
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-3 collapse-inner rounded-lg shadow-sm mx-3" style="border: 1px solid rgba(0,0,0,0.05); backdrop-filter: blur(10px);">
                 <h6 class="collapse-header text-success fw-bold px-3 mb-2">Pilih Data:</h6>
