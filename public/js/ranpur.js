@@ -548,6 +548,17 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
                                 <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
                             </div>
                             <div class="card-body">
+                            <div class="input-group mb-3">
+                                    <span class="input-group-text bg-light" style="border-radius: 10px 0 0 10px">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control search-input" 
+                                           data-target="${stok.id}"
+                                           data-kategori="${stok.nama_kategori}"
+                                           placeholder="Cari data..."
+                                           style="border-radius: 0 10px 10px 0">
+                                </div>
                                 <ul class="nav nav-tabs" role="tablist">
                                     ${descriptionParts.map((_, partIndex) => `
                                         <li class="nav-item" role="presentation">
@@ -572,6 +583,33 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
                 `;
 
                 containers.deskripsicardcontainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+            document.querySelectorAll('.search-input').forEach(input => {
+                input.addEventListener('input', function () {
+                    const searchTerm = this.value.toLowerCase();
+                    const stokId = this.getAttribute('data-target');
+                    const kategori = this.getAttribute('data-kategori');
+
+                    const cardContainer = this.closest('.card');
+                    const tables = cardContainer.querySelectorAll(`#sheet-${stokId}-0 table, #sheet-${stokId}-1 table, #sheet-${stokId}-2 table`);
+
+                    tables.forEach(table => {
+                        const rows = table.querySelectorAll('tr');
+                        rows.forEach((row, index) => {
+                            if (index === 0) return;
+
+                            const text = row.textContent.toLowerCase();
+                            row.style.transition = 'opacity 0.3s ease';
+                            if (text.includes(searchTerm)) {
+                                row.style.display = '';
+                                row.style.opacity = '1';
+                            } else {
+                                row.style.opacity = '0';
+                                setTimeout(() => row.style.display = 'none', 300);
+                            }
+                        });
+                    });
+                });
             });
         }
     } catch (error) {
