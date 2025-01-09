@@ -4,11 +4,10 @@
 <footer class="sticky-footer bg-gradient-light shadow-sm">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-<<<<<<< HEAD
-            <span class="text-primary font-weight-bold">Copyright &copy; SILEO <?= date('Y') ?></span>
-=======
-            <span>Copyright &copy; SISFO SUCAD LEO</span>
->>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c
+
+            <span class="text-primary font-weight-bold">Copyright &copy; SISTEM INFORMASI SUKU CADANG LEOPARD <?= date('Y') ?></span>
+           <!-- <span>Copyright &copy; SISFO SUCAD LEO</span>
+<!-- >>>>>>> 74bc8ff0ea77bd1c51e8c9090c3c11f3868c962c --> 
         </div>
     </div>
 </footer>
