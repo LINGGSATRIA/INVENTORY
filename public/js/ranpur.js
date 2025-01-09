@@ -241,7 +241,7 @@ async function showSubSubSubCards(subSubCardLink) {
                         ${part || `Konten untuk Sheet ${index + 1} kosong`}
                     </div>
                 `).join('');
-
+//TOTAL
                 const cardHTML = `
                     <div class="col" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                         <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
@@ -540,12 +540,12 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
                         </div>
                     `;
                 }).join("");
-
+//DATA PER BATALYON
                 const cardHTML = `
                     <div class="col" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                         <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
                             <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
-                                <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
+                                <h5 class="mb-0 text-center fw-bold">STOK DATA - ${stok.nama_kategori}</h5>
                             </div>
                             <div class="card-body">
                             <div class="input-group mb-3">
