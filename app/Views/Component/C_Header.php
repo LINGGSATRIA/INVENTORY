@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistem Informasi Leopard">
     <meta name="author" content="SILEO">
-    <link rel="icon" href="<?= base_url('img/tank1.ico'); ?>" type="image/x-icon">
+    <link rel="icon" href="<?= base_url('img/kav-01.ico'); ?>" type="image/x-icon">
 
     <title>SISFO SUCAD LEO</title>
 

@@ -19,9 +19,10 @@
     <link href="<?= base_url("Assets/sbadmin/tambahan.css") ?>" rel="stylesheet">
 
     <style>
+        /* background: linear-gradient(135deg, #1D4B2C 0%, #0F2E1B 50%, #0A1F12 100% */
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            background: linear-gradient(135deg,rgb(19, 50, 30) 0%,rgb(46, 97, 64) 50%,rgb(66, 132, 92) 100%);
             height: 100vh;
         }
         .card {
@@ -41,7 +42,7 @@
             box-shadow: 0 0 0 0.2rem rgba(38, 208, 206, 0.25);
         }
         .btn-login {
-            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            background: linear-gradient(135deg,rgb(19, 50, 30) 0%,rgb(71, 147, 99) 50%,rgb(125, 213, 159) 100%);
             border: none;
             border-radius: 10px;
             padding: 12px;
@@ -79,7 +80,7 @@
                 <div class="card">
                     <div class="card-body p-5">
                         <div class="logo-container">
-                            <img src="<?= base_url('Assets/sbadmin/img/tank1.png') ?>" alt="SILEO Logo">
+                            <img src="<?= base_url('Assets/sbadmin/img/kav-01.PNG') ?>" alt="SILEO Logo">
                             <h1 class="h3 text-dark font-weight-bold">SISFO SUCAD LEO</h1>
                             <p class="text-muted">Selamat datang kembali</p>
                         </div>
