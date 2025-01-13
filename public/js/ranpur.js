@@ -241,13 +241,13 @@ async function showSubSubSubCards(subSubCardLink) {
                         ${part || `Konten untuk Sheet ${index + 1} kosong`}
                     </div>
                 `).join('');
-//TOTAL
+                //TOTAL
                 const cardHTML = `
                     <div class="col" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                         <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
                             <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
                                 <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
-                                <button class="btn btn-light btn-sm" onclick="downloadTableToPDF('${stok.id }', '${stok.nama_kategori}')">Download PDF</button>
+                                <button class="btn btn-light btn-sm" onclick="downloadTableToPDF('${stok.id}', '${stok.nama_kategori}')">Download PDF</button>
                             </div>
                             <div class="card-body">
                                 <div class="input-group mb-3">
@@ -548,7 +548,7 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
                         <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
                             <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
                                 <h5 class="mb-0 text-center fw-bold">STOK DATA - ${stok.nama_kategori}</h5>
-                                <button class="btn btn-light btn-sm" onclick="downloadTableToPDF('${stok.id }', '${stok.nama_kategori}')">Download PDF</button>
+                                <button class="btn btn-light btn-sm" onclick="downloadTableToPDF('${stok.id}', '${stok.nama_kategori}')">Download PDF</button>
                             </div>
                             <div class="card-body">
                             <div class="input-group mb-3">
@@ -623,15 +623,30 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
 
 function downloadTableToPDF(stokId, nama_kategori) {
     const cardContainer = document.querySelector(`#sheet-${stokId}-0`);
-    const table = cardContainer.querySelector("table");
+    const table = cardContainer ? cardContainer.querySelector("table") : null;
 
     if (table) {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF();
-        pdf.autoTable({ html: table });
+
+        // Menambahkan judul di atas tabel
+        pdf.setFontSize(16); // Ukuran font untuk judul
+        pdf.text(`Stok Data - ${nama_kategori}`, 14, 20); // Menambahkan teks judul pada posisi x: 14, y: 20
+
+        // Menambahkan tabel
+        pdf.autoTable({
+            html: table,
+            startY: 30, // Posisi tabel setelah judul
+            theme: 'grid',
+            styles: { fontSize: 10 },
+            margin: { top: 20 }
+        });
+
+        // Menyimpan file PDF
         pdf.save(`Stok_Data_${nama_kategori}.pdf`);
     } else {
         alert('Tidak ada tabel untuk diunduh.');
     }
 }
+
 
