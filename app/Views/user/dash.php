@@ -82,11 +82,11 @@
             function changeBackground(element) {
                 const cardBody = element.querySelector('.card-body');
 
-                // Reset background color of the last clicked card
-                if (lastClickedCard && lastClickedCard !== cardBody) {
-                    lastClickedCard.classList.remove('bg-gradient-danger');
-                    lastClickedCard.classList.add('bg-gradient-info');
-                }
+                // // Reset background color of the last clicked card
+                // if (lastClickedCard && lastClickedCard !== cardBody) {
+                //     lastClickedCard.classList.remove('bg-gradient-danger');
+                //     lastClickedCard.classList.add('bg-gradient-info');
+                // }
 
                 // Change background color of the currently clicked card
                 if (cardBody.classList.contains('bg-gradient-info')) {
