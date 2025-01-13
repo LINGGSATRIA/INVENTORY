@@ -79,26 +79,50 @@
             function changeBackground(element) {
                 const cardBody = element.querySelector('.card-body');
 
-                // Reset background color of the last clicked card
-                if (lastClickedCard && lastClickedCard !== cardBody) {
-                    lastClickedCard.classList.remove('bg-gradient-success');
-                    lastClickedCard.classList.add('bg-gradient-info');
-                }
+                // // Reset background color of the last clicked card
+                // if (lastClickedCard && lastClickedCard !== cardBody) {
+                //     lastClickedCard.classList.remove('bg-gradient-danger');
+                //     lastClickedCard.classList.add('bg-gradient-success');
+                // }
 
                 // Change background color of the currently clicked card
-                if (cardBody.classList.contains('bg-gradient-info')) {
-                    cardBody.classList.remove('bg-gradient-info');
+                if (cardBody.classList.contains('bg-gradient-danger')) {
+                    cardBody.classList.remove('bg-gradient-danger');
                     cardBody.classList.add('bg-gradient-success');
                 } else {
                     cardBody.classList.remove('bg-gradient-success');
-                    cardBody.classList.add('bg-gradient-info');
+                    cardBody.classList.add('bg-gradient-danger');
                 }
 
                 // Update the last clicked card
                 lastClickedCard = cardBody;
             }
+            let lastClickedCard1 = null;
+
+            function changeBackgroundasub(element) {
+                const cardBody = element.querySelector('.card-body');
+
+                // // Reset background color of the last clicked card
+                // if (lastClickedCard && lastClickedCard !== cardBody) {
+                //     lastClickedCard.classList.remove('bg-gradient-danger');
+                //     lastClickedCard.classList.add('bg-gradient-success');
+                // }
+
+                // Change background color of the currently clicked card
+                if (cardBody.classList.contains('bg-gradient-danger')) {
+                    cardBody.classList.remove('bg-gradient-danger');
+                    cardBody.classList.add('bg-gradient-light');
+                } else {
+                    cardBody.classList.remove('bg-gradient-light');
+                    cardBody.classList.add('bg-gradient-danger');
+                }
+
+                // Update the last clicked card
+                lastClickedCard1 = cardBody;
+            }
         </script>
     </div>
+
 
     <div id="sub-cards" class="row mt-4 fade-in"></div>
     <div id="sub-sub-cards" class="row mt-4 fade-in"></div>
@@ -107,6 +131,29 @@
     <div id="wilayah-boxes" class="row mt-4 fade-in"></div>
     <div id="sub-sub-sub-sub-cards" class="row mt-4 fade-in"></div>
     <div id="deskripsi-cards" class="row mt-4 fade-in"></div>
+
+    <script>
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes.length) {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === 1) { // Check if the added node is an element
+                            node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                }
+            });
+        });
+
+        const config = { childList: true, subtree: true };
+        observer.observe(document.getElementById('sub-cards'), config);
+        observer.observe(document.getElementById('sub-sub-cards'), config);
+        observer.observe(document.getElementById('show-Sucad-Boxes'), config);
+        observer.observe(document.getElementById('sub-sub-sub-cards'), config);
+        observer.observe(document.getElementById('wilayah-boxes'), config);
+        observer.observe(document.getElementById('sub-sub-sub-sub-cards'), config);
+        observer.observe(document.getElementById('deskripsi-cards'), config);
+    </script>
 
     <style>
         .hover-card {

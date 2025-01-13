@@ -18,6 +18,7 @@ async function showSubCards(type) {
         }
     });
 
+    
     try {
         // Ambil data dari API
         const response = await fetch('/wilayah/getTIpeBykategori/' + type);
@@ -33,7 +34,7 @@ async function showSubCards(type) {
         const cardsHTML = ranpurData.map((ranpur, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showSubSubCards('${ranpur.tipe_ranpur}')"
+                     onclick="showSubSubCards('${ranpur.tipe_ranpur}');changeBackground(this);"
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-success" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -47,6 +48,7 @@ async function showSubCards(type) {
                     </div>
                 </div>
             </div>
+            
         `).join('');
 
         // Tambahkan styles dan render cards
@@ -115,7 +117,7 @@ async function showSubSubCards(subCardName) {
         const cardsHTML = ranpurData.map((ranpur, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showSucadBoxes('${ranpur.nama_versi}')"
+                     onclick="showSucadBoxes('${ranpur.nama_versi}');changeBackground(this);"
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-warning" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -125,6 +127,7 @@ async function showSubSubCards(subCardName) {
                         </div>
                     </div>
                 </div>
+             
             </div>
         `).join('');
 
@@ -158,7 +161,7 @@ async function showSucadBoxes(subSubCardLink) {
         <div class="row mb-4">
             <div class="d-flex justify-content-center align-items-center w-100">
                 <div class="col-xl-5 mx-2">
-                <div class="card hover-shadow transition-300 h-100" onclick="showWilayahBoxes('${subSubCardLink}')">
+                <div class="card hover-shadow transition-300 h-100" onclick="showWilayahBoxes('${subSubCardLink}');changeBackground(this);">
                     <div class="card shadow-lg border-0" 
                          style="border-radius: 15px; animation: fadeInUp 0.3s ease-out; transform: scale(0.98); transition: all 0.3s ease">
                         <div class="card-body bg-gradient-primary text-white" style="border-radius: 15px">
@@ -170,7 +173,7 @@ async function showSucadBoxes(subSubCardLink) {
                 </div>
                 </div>
                 <div class="col-xl-5 mx-2">
-                    <div class="card hover-shadow transition-300 h-100" onclick="showSubSubSubCards('${subSubCardLink}')">
+                    <div class="card hover-shadow transition-300 h-100" onclick="showSubSubSubCards('${subSubCardLink}');changeBackground(this);">
                         <div class="card shadow-lg border-0"
                              style="border-radius: 15px; animation: fadeInUp 0.4s ease-out; transform: scale(0.98); transition: all 0.3s ease">
                             <div class="card-body bg-gradient-success text-white" style="border-radius: 15px">
@@ -182,6 +185,7 @@ async function showSucadBoxes(subSubCardLink) {
                     </div>
                 </div>
             </div>
+
         </div>
     `;
 
@@ -340,7 +344,7 @@ async function showSubSubSubSubCards(nama_wilayah) {
         const cardsHTML = ranpurData.map((ranpur, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showDeskripsi('${ranpur.nama_ranpur}', '${ranpur.nama_wilayah}')"
+                     onclick="showDeskripsi('${ranpur.nama_ranpur}', '${ranpur.nama_wilayah}');changeBackground(this);" 
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-light" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -395,7 +399,7 @@ async function showWilayahBoxes(wilayahlink, nama_versi) {
         const boxesHTML = wilayahData.map((wilayah, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="showSubWilayahBoxes('${wilayah.nama_wilayah}', '${wilayah.nama_versi}')"
+                     onclick="showSubWilayahBoxes('${wilayah.nama_wilayah}', '${wilayah.nama_versi}');changeBackground(this);" 
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-info" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
@@ -446,7 +450,7 @@ async function showSubWilayahBoxes(nama_wilayah) {
         const cardsHTML = subWilayahData.map((subWilayah, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
-                     onclick="deskripsipersubwilayah('${subWilayah.nama_versi}', '${subWilayah.sub_wilayah}')"
+                     onclick="deskripsipersubwilayah('${subWilayah.nama_versi}', '${subWilayah.sub_wilayah}'); changeBackgroundasub(this);"
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-light" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
