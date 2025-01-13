@@ -47,6 +47,7 @@
     </li>
 
     <!-- Nav Item - User Management -->
+    <?php if (session()->get('role') == 1): ?>
     <li class="nav-item">
         <a class="nav-link d-flex align-items-center py-3 px-4" href="<?= base_url('admin/user') ?>"
            style="transition: all 0.3s ease; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);">
@@ -54,6 +55,7 @@
             <span class="fw-medium">User</span>
         </a>
     </li>
+    <?php endif; ?>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-3" style="border-color: rgba(255,255,255,0.1); box-shadow: 0 1px 2px rgba(0,0,0,0.1);">
