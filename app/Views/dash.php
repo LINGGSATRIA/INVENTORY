@@ -10,7 +10,7 @@
     <div class="row g-4">
         <!-- Card Ranpur Kanon -->
         <div class="col-xl-3 col-md-6">
-            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('kanon')">
+            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('kanon'); changeBackground(this);">
                 <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -25,9 +25,8 @@
             </div>
         </div>
 
-        <!-- Card Ranpur Angkut Personel -->
         <div class="col-xl-3 col-md-6">
-            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('personel')">
+            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('personel'); changeBackground(this);">
                 <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -42,9 +41,8 @@
             </div>
         </div>
 
-        <!-- Card Ranpur Intai -->
         <div class="col-xl-3 col-md-6">
-            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('intai')">
+            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('intai'); changeBackground(this);">
                 <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -59,9 +57,8 @@
             </div>
         </div>
 
-        <!-- Card Ranpur Pendukung -->
         <div class="col-xl-3 col-md-6">
-            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('pendukung')">
+            <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('pendukung'); changeBackground(this);">
                 <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
@@ -75,6 +72,32 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            let lastClickedCard = null;
+
+            function changeBackground(element) {
+                const cardBody = element.querySelector('.card-body');
+
+                // Reset background color of the last clicked card
+                if (lastClickedCard && lastClickedCard !== cardBody) {
+                    lastClickedCard.classList.remove('bg-gradient-success');
+                    lastClickedCard.classList.add('bg-gradient-info');
+                }
+
+                // Change background color of the currently clicked card
+                if (cardBody.classList.contains('bg-gradient-info')) {
+                    cardBody.classList.remove('bg-gradient-info');
+                    cardBody.classList.add('bg-gradient-success');
+                } else {
+                    cardBody.classList.remove('bg-gradient-success');
+                    cardBody.classList.add('bg-gradient-info');
+                }
+
+                // Update the last clicked card
+                lastClickedCard = cardBody;
+            }
+        </script>
     </div>
 
     <div id="sub-cards" class="row mt-4 fade-in"></div>
