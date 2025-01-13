@@ -52,6 +52,9 @@
 <script src="<?= base_url('vendor/jquery-easing/jquery.easing.min.js') ?>"></script>
 <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
 <script src="<?= base_url('js/ranpur.js') ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <!-- DataTables -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
