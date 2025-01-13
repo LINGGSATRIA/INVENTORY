@@ -5,7 +5,7 @@
 <footer class="sticky-footer bg-gradient-light shadow-sm">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span class="text-primary font-weight-bold">Copyright &copy; Sistem Informasi Suku Cadang Leopard <?= date('Y') ?></span>
+            <span class="text-secondary font-weight-bold">Copyright &copy; Sistem Informasi Suku Cadang Leopard <?= date('Y') ?></span>
         </div>
     </div>
 </footer>
@@ -80,7 +80,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-gradient-light border-bottom-0">
-                <h5 class="modal-title text-primary font-weight-bold" id="exampleModalLabel">Konfirmasi Keluar</h5>
+                <h5 class="modal-title text-success font-weight-bold" id="exampleModalLabel">Konfirmasi Keluar</h5>
                 <button class="close hover-scale" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="text-primary">&times;</span>
                 </button>
@@ -90,7 +90,7 @@
             </div>
             <div class="modal-footer border-top-0">
                 <button class="btn btn-light hover-scale px-4" type="button" data-dismiss="modal">Batal</button>
-                <a class="btn btn-primary hover-scale px-4" href="<?= base_url('logout') ?>">Ya, Keluar</a>
+                <a class="btn btn-success hover-scale px-4" href="<?= base_url('logout') ?>">Ya, Keluar</a>
             </div>
         </div>
     </div>
