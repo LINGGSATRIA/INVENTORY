@@ -11,7 +11,7 @@
         <!-- Card Ranpur Kanon -->
         <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('kanon')">
-                <div class="card-body bg-gradient-primary text-white rounded-4">
+                <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-2 fw-bold">Ranpur Kanon</div>
@@ -28,7 +28,7 @@
         <!-- Card Ranpur Angkut Personel -->
          <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('personel')">
-                <div class="card-body bg-gradient-success text-white rounded-4">
+                <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-2 fw-bold">Ranpur Angkut Personel</div>
@@ -62,7 +62,7 @@
         <!-- Card Ranpur Pendukung  -->
          <div class="col-xl-3 col-md-6">
             <div class="card shadow-lg h-100 hover-card" onclick="showSubCards('pendukung')">
-                <div class="card-body bg-gradient-warning text-white rounded-4">
+                <div class="card-body bg-gradient-info text-white rounded-4">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="h5 mb-2 fw-bold">Ranpur Pendukung</div>
