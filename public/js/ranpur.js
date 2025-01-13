@@ -34,9 +34,13 @@ async function showSubCards(type) {
         const cardsHTML = ranpurData.map((ranpur, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
+<<<<<<< HEAD
                      onclick="showSubSubCards('${ranpur.tipe_ranpur}');changeBackground(this);"
+=======
+                     onclick="showSubSubCards('${ranpur.tipe_ranpur}'); changeBackground(this);"
+>>>>>>> c2ca19a045888fc4f23e77a88a28ff11ca92dbd0
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
-                    <div class="card-body bg-gradient-success" style="border-radius: 15px">
+                    <div class="card-body bg-gradient-success"  style="border-radius: 15px">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
                                 <h5 class="text-white mb-0 fw-bold">${ranpur.tipe_ranpur}</h5>
@@ -47,6 +51,33 @@ async function showSubCards(type) {
                         </div>
                     </div>
                 </div>
+
+                        <script>
+            let lastClickedCard = null;
+
+            function changeBackground1(element) {
+                const cardBody = element.querySelector('.card-body');
+
+                // Reset background color of the last clicked card
+                if (lastClickedCard && lastClickedCard !== cardBody) {
+                    lastClickedCard.classList.remove('bg-gradient-danger');
+                    lastClickedCard.classList.add('bg-gradient-success');
+                }
+
+                // Change background color of the currently clicked card
+                if (cardBody.classList.contains('bg-gradient-success')) {
+                    cardBody.classList.remove('bg-gradient-success');
+                    cardBody.classList.add('bg-gradient-danger');
+                } else {
+                    cardBody.classList.remove('bg-gradient-danger');
+                    cardBody.classList.add('bg-gradient-success');
+                }
+
+                // Update the last clicked card
+                lastClickedCard = cardBody;
+            }
+        </script>
+
             </div>
             
         `).join('');
@@ -117,7 +148,11 @@ async function showSubSubCards(subCardName) {
         const cardsHTML = ranpurData.map((ranpur, index) => `
             <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
                 <div class="card hover-shadow transition-300 h-100" 
+<<<<<<< HEAD
                      onclick="showSucadBoxes('${ranpur.nama_versi}');changeBackground(this);"
+=======
+                     onclick="showSucadBoxes('${ranpur.nama_versi}');changeBackground1(this);"
+>>>>>>> c2ca19a045888fc4f23e77a88a28ff11ca92dbd0
                      style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
                     <div class="card-body bg-gradient-warning" style="border-radius: 15px">
                         <div class="d-flex align-items-center">
