@@ -82,7 +82,7 @@
                         <div class="logo-container">
                             <img src="<?= base_url('Assets/sbadmin/img/kav-01.PNG') ?>" alt="SILEO Logo">
                             <h1 class="h3 text-dark font-weight-bold">SISFO SUCAD LEO</h1>
-                            <p class="text-muted">Selamat datang kembali</p>
+                            <p class="text-muted">Selamat Datang</p>
                         </div>
 
                         <?php if ($errors = session()->getFlashdata('error')): ?>
