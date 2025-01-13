@@ -81,16 +81,16 @@
 
                 // Reset background color of the last clicked card
                 if (lastClickedCard && lastClickedCard !== cardBody) {
-                    lastClickedCard.classList.remove('bg-gradient-success');
+                    lastClickedCard.classList.remove('bg-gradient-danger');
                     lastClickedCard.classList.add('bg-gradient-info');
                 }
 
                 // Change background color of the currently clicked card
                 if (cardBody.classList.contains('bg-gradient-info')) {
                     cardBody.classList.remove('bg-gradient-info');
-                    cardBody.classList.add('bg-gradient-success');
+                    cardBody.classList.add('bg-gradient-danger');
                 } else {
-                    cardBody.classList.remove('bg-gradient-success');
+                    cardBody.classList.remove('bg-gradient-danger');
                     cardBody.classList.add('bg-gradient-info');
                 }
 
