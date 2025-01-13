@@ -133,6 +133,7 @@
         function fetchDeskripsi() {
             const nama_versi = versiInput.value;
             const nama_kategori = kategoriInput.value;
+            const sub_wilayah = ranpurInput.value;
 
             if (nama_versi && nama_kategori) {
                 fetch('<?= site_url('admin/stokpusat/getDeskripsi') ?>', {
@@ -143,7 +144,8 @@
                     },
                     body: JSON.stringify({
                         nama_versi,
-                        nama_kategori
+                        nama_kategori,
+                        sub_wilayah
                     })
                 })
                 .then(response => response.json())

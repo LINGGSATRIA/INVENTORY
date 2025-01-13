@@ -54,6 +54,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="sub_wilayah" class="text-dark font-weight-bold">Sub Wilayah</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="sub_wilayah" name="sub_wilayah" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email" class="text-dark font-weight-bold">Email</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -80,8 +90,9 @@
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                 </div>
                                 <select class="form-control" id="role" name="role" required>
+                                    <option value="3">Admin Wilayah</option>
                                     <option value="2">User</option>
-                                    <option value="1">Admin</option>
+                                    <option value="1">Admin Pusat</option>
                                 </select>
                             </div>
                         </div>
@@ -113,6 +124,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Sub Wilayah</th>
                                     <th class="text-center">Foto</th>
                                     <th class="text-center">Aksi</th>
                                 </tr>
@@ -126,11 +138,14 @@
                                             <td><?= $user['email'] ?></td>
                                             <td>
                                                 <?php if($user['role'] == 1): ?>
-                                                    <span class="badge badge-primary">Admin</span>
-                                                <?php else: ?>
+                                                    <span class="badge badge-primary">Admin Pusat</span>
+                                                <?php elseif($user['role'] == 2): ?>
                                                     <span class="badge badge-info">User</span>
+                                                <?php elseif($user['role'] == 3): ?>
+                                                    <span class="badge badge-success">Admin Wilayah</span>
                                                 <?php endif; ?>
                                             </td>
+                                            <td><?= $user['sub_wilayah'] ?></td>
                                             <td class="text-center">
                                                 <?php if ($user['foto'] && file_exists('adminfoto/' . $user['foto'])): ?>
                                                     <img src="../adminfoto/<?= $user['foto'] ?>" alt="Foto User" class="img-profile rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;">

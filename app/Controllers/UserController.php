@@ -28,6 +28,7 @@ class UserController extends BaseController
         $name = $this->request->getPost('name');
         $email = $this->request->getPost('email');
         $role = $this->request->getPost('role');
+        $sub_wilayah = $this->request->getPost('sub_wilayah');
         $password = $this->request->getPost('password');
 
         // Upload foto jika ada
@@ -42,7 +43,7 @@ class UserController extends BaseController
         }
 
         // Cek jika salah satu field kosong
-        if (empty($name) || empty($email) || empty($role) || empty($password)) {
+        if (empty($name) || empty($email) || empty($role) || empty($sub_wilayah) || empty($password)) {
             return redirect()->back()->with('error', 'Semua field harus diisi.');
         }
 
@@ -51,6 +52,7 @@ class UserController extends BaseController
             'name' => $name,
             'email' => $email,
             'role' => $role,
+            'sub_wilayah' => $sub_wilayah,
             'password' => password_hash($password, PASSWORD_DEFAULT),
             'foto' => $photoPath, // Menyimpan path foto
         ];
@@ -85,6 +87,7 @@ class UserController extends BaseController
         $name = $this->request->getPost('name');
         $email = $this->request->getPost('email');
         $role = $this->request->getPost('role');
+        $sub_wilayah = $this->request->getPost('sub_wilayah');
         $password = $this->request->getPost('password');
 
         // Ambil data pengguna dari database berdasarkan ID
@@ -110,7 +113,7 @@ class UserController extends BaseController
         }
 
         // Validasi input wajib
-        if (empty($name) || empty($email) || empty($role)) {
+        if (empty($name) || empty($email) || empty($role) || empty($sub_wilayah)) {
             return redirect()->back()->with('error', 'Semua field harus diisi kecuali password.');
         }
 
@@ -119,6 +122,7 @@ class UserController extends BaseController
             'name' => $name,
             'email' => $email,
             'role' => $role,
+            'sub_wilayah' => $sub_wilayah,
             'foto' => $photoPath, // Tetapkan foto lama atau baru
         ];
 

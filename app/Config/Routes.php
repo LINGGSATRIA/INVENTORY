@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
- $routes->group('admin', ['filter' => ['auth', 'role:1']], function ($routes) {
+ $routes->group('admin', ['filter' => ['auth', 'role:1,3',]], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('stokpusat', 'StokDataController::index');
     $routes->post('stokpusat/simpan', 'StokDataController::simpanDataStok');

@@ -17,6 +17,7 @@ class StokDataController extends BaseController
         $this->versiRanpurModel = new VersiRanpurModel();
         $this->stokDataModel = new StokDataModel();
         $this->kategoriModel = new KategoriModel();
+        
     }
 
     public function index()
