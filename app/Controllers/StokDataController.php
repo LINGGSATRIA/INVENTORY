@@ -55,17 +55,22 @@ class StokDataController extends BaseController
             ? $existingVersiRanpur['id']
             : $this->versiRanpurModel->insert(['nama_versi' => $versiRanpur], true);
 
+        // Ambil sub_wilayah dari session
+        $subWilayah = $this->request->getPost('sub_wilayah');
+
         // Persiapkan data stok
         $data = [
             'id_versi_ranpur' => $idVersiRanpur,
             'id_kategori' => $idKategori,
             'Deskripsi' => $deskripsi,
+            'sub_wilayah' => $subWilayah, // Tambahkan sub_wilayah ke data
         ];
 
         // Periksa apakah data stok sudah ada
         $existingStok = $this->stokDataModel
             ->where('id_versi_ranpur', $data['id_versi_ranpur'])
             ->where('id_kategori', $data['id_kategori'])
+            ->where('sub_wilayah', $data['sub_wilayah']) // Tambahkan pengecekan sub_wilayah
             ->first();
 
         if ($existingStok) {
@@ -90,15 +95,17 @@ class StokDataController extends BaseController
         // Pastikan bahwa data yang diterima adalah array dan memiliki nama_versi dan nama_kategori
         $nama_versi = isset($data->nama_versi) ? $data->nama_versi : null;
         $nama_kategori = isset($data->nama_kategori) ? $data->nama_kategori : null;
+        $sub_wilayah = isset($data->sub_wilayah) ? $data->sub_wilayah : null;
 
         // Log data untuk debugging
         log_message('debug', 'nama_versi: ' . var_export($nama_versi, true));
         log_message('debug', 'nama_kategori: ' . var_export($nama_kategori, true));
+        log_message('debug', 'sub_wilayah: ' . var_export($sub_wilayah, true));
 
         // Cek apakah data ada
-        if ($nama_versi && $nama_kategori) {
+        if ($nama_versi && $nama_kategori && $sub_wilayah) {
             // Ambil data deskripsi dengan join
-            $deskripsi = $this->stokDataModel->getDeskripsiWithJoin($nama_versi, $nama_kategori);
+            $deskripsi = $this->stokDataModel->getDeskripsiWithJoin($nama_versi, $nama_kategori, $sub_wilayah);
 
             if ($deskripsi) {
                 return $this->response->setJSON(['success' => true, 'deskripsi' => $deskripsi['Deskripsi']]);

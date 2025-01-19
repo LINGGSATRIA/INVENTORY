@@ -111,7 +111,32 @@
     <div id="wilayah-boxes" class="row mt-4 fade-in"></div>
     <div id="sub-sub-sub-sub-cards" class="row mt-4 fade-in"></div>
     <div id="deskripsi-cards" class="row mt-4 fade-in"></div>
+    <div id="totalperwilayahcards" class="row mt-4 fade-in"></div>
 
+
+    <script>
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes.length) {
+                    mutation.addedNodes.forEach(node => {
+                        if (node.nodeType === 1) { // Check if the added node is an element
+                            node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                }
+            });
+        });
+
+        const config = { childList: true, subtree: true };
+        observer.observe(document.getElementById('sub-cards'), config);
+        observer.observe(document.getElementById('sub-sub-cards'), config);
+        observer.observe(document.getElementById('show-Sucad-Boxes'), config);
+        observer.observe(document.getElementById('sub-sub-sub-cards'), config);
+        observer.observe(document.getElementById('wilayah-boxes'), config);
+        observer.observe(document.getElementById('sub-sub-sub-sub-cards'), config);
+        observer.observe(document.getElementById('deskripsi-cards'), config);
+        observer.observe(document.getElementById('totalperwilayahcards'), config);
+    </script>
     <style>
         .hover-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);

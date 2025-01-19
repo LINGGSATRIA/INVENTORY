@@ -131,6 +131,7 @@
     <div id="wilayah-boxes" class="row mt-4 fade-in"></div>
     <div id="sub-sub-sub-sub-cards" class="row mt-4 fade-in"></div>
     <div id="deskripsi-cards" class="row mt-4 fade-in"></div>
+    <div id="totalperwilayahcards" class="row mt-4 fade-in"></div>
 
     <script>
         const observer = new MutationObserver((mutations) => {
@@ -153,6 +154,7 @@
         observer.observe(document.getElementById('wilayah-boxes'), config);
         observer.observe(document.getElementById('sub-sub-sub-sub-cards'), config);
         observer.observe(document.getElementById('deskripsi-cards'), config);
+        observer.observe(document.getElementById('totalperwilayahcards'), config);
     </script>
 
     <style>

@@ -36,7 +36,7 @@
                                 <input type="text" name="nama_versi" id="nama_versi" class="form-control" placeholder="Cari atau Masukkan Versi Ranpur" list="versi_ranpur_list" required>
                                 <datalist id="versi_ranpur_list">
                                     <?php foreach ($versiRanpur as $v): ?>
-                                        <option value="<?= $v['nama_versi'] ?>"></option>
+                                        <option value="<?= esc($v['nama_versi']) ?>"></option>
                                     <?php endforeach; ?>
                                 </datalist>
                             </div>
@@ -52,13 +52,29 @@
                                 <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" placeholder="Cari atau Masukkan Kategori" list="kategori_list" required>
                                 <datalist id="kategori_list">
                                     <?php foreach ($nama_kategori as $k): ?>
-                                        <option value="<?= $k['nama_kategori'] ?>"></option>
+                                        <option value="<?= esc($k['nama_kategori']) ?>"></option>
                                     <?php endforeach; ?>
                                 </datalist>
                             </div>
                         </div>
                     </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="sub_wilayah" class="form-label font-weight-bold">Sub Wilayah</label>
+                        <select name="sub_wilayah" id="sub_wilayah" class="form-control" required>
+                            <option value="" disabled selected>Pilih Sub Wilayah</option>
+                            <?php if (session()->get('role') == 1): ?>
+                                <?php foreach ($stok_data as $subWilayah): ?>
+                                    <option value="<?= esc($subWilayah['sub_wilayah']) ?>"><?= esc($subWilayah['sub_wilayah']) ?></option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="<?= esc(session()->get('sub_wilayah')) ?>" selected><?= esc(session()->get('sub_wilayah')) ?></option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
                 </div>
+                </div>
+                
 
                 <div class="form-group">
                     <label for="editor_content" class="form-label font-weight-bold">Deskripsi</label>
@@ -83,6 +99,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         const versiInput = document.getElementById('nama_versi');
         const kategoriInput = document.getElementById('nama_kategori');
+        const subWilayahInput = document.getElementById('sub_wilayah');
+
+        // Cek apakah pengguna adalah admin
+        const isAdmin = <?= session()->get('role') == 1 ? 'true' : 'false' ?>;
 
         tinymce.init({
             selector: '#editor',
@@ -101,23 +121,11 @@
                                     <th>Part Number</th>
                                     <th>Jenis Sucad</th>
                                     <th>Nama Sucad</th>
-                                    <th>Yonkav 1</th>
-                                    <th>Yonkav 8</th>
-                                    <th>Pusdikkav</th>
-                                    <th>Kikav Puslatpur</th>
-                                    <th>Bengpuskav</th>
-                                    <th>Gupusran</th>
-                                    <th>Total Sucad</th>
+                                    <th>${isAdmin ? subWilayahInput.options[subWilayahInput.selectedIndex].text : '<?= session()->get('sub_wilayah') ?>'}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -133,7 +141,7 @@
         function fetchDeskripsi() {
             const nama_versi = versiInput.value;
             const nama_kategori = kategoriInput.value;
-            
+            const sub_wilayah = isAdmin ? subWilayahInput.value : '<?= session()->get('sub_wilayah') ?>';
 
             if (nama_versi && nama_kategori) {
                 fetch('<?= site_url('admin/stokpusat/getDeskripsi') ?>', {
@@ -145,7 +153,7 @@
                     body: JSON.stringify({
                         nama_versi,
                         nama_kategori,
-                       
+                        sub_wilayah: sub_wilayah 
                     })
                 })
                 .then(response => response.json())
@@ -160,6 +168,7 @@
 
         versiInput.addEventListener('input', fetchDeskripsi);
         kategoriInput.addEventListener('input', fetchDeskripsi);
+        subWilayahInput.addEventListener('change', fetchDeskripsi);
     });
 </script>
 

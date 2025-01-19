@@ -73,11 +73,11 @@ class Home extends BaseController
         return $this->response->setJSON($dataRanpur);
     }
 
-    public function getByTipe($tipe)
+    public function getByTipeAll($tipe)
     {
         // Query untuk mengambil data stok berdasarkan tipe
         $stokData = $this->stokDataModel
-            ->select('kategori_stok.deskripsi, kategori.nama_kategori, versi_ranpur.nama_versi')
+            ->select('kategori_stok.deskripsi, kategori.nama_kategori, versi_ranpur.nama_versi, kategori_stok.sub_wilayah')
             ->join('versi_ranpur', 'versi_ranpur.id = kategori_stok.id_versi_ranpur')
             ->join('kategori', 'kategori.id = kategori_stok.id_kategori')
             ->where('versi_ranpur.nama_versi', $tipe)
@@ -89,6 +89,36 @@ class Home extends BaseController
         }
 
         // Mengembalikan data stok dalam format JSON
+        return $this->response->setJSON($stokData);
+    }
+
+    public function getByTipe($tipe, $sub_wilayah)
+    {
+        // Query untuk mengambil data stok berdasarkan tipe
+        $stokData = $this->stokDataModel
+            ->select('kategori_stok.deskripsi, kategori.nama_kategori, versi_ranpur.nama_versi, kategori_stok.sub_wilayah')
+            ->join('versi_ranpur', 'versi_ranpur.id = kategori_stok.id_versi_ranpur')
+            ->join('kategori', 'kategori.id = kategori_stok.id_kategori')
+            ->where('versi_ranpur.nama_versi', $tipe)
+            ->where('kategori_stok.sub_wilayah', $sub_wilayah)
+            ->findAll();
+
+        // Mengecek apakah data ditemukan
+        if (empty($stokData)) {
+            return $this->response->setJSON(['message' => 'Data tidak ditemukan']);
+        }
+
+        // Mengembalikan data stok dalam format JSON
+        return $this->response->setJSON($stokData);
+    }
+    public function ambilsemua($tipe)
+    {
+        $stokData = $this->stokDataModel->ambilsemua($tipe);
+        return $this->response->setJSON($stokData);
+    }
+    public function ambilpersubwilayah($sub_wilayah)
+    {
+        $stokData = $this->stokDataModel->ambilpersubwilayah($sub_wilayah);
         return $this->response->setJSON($stokData);
     }
 

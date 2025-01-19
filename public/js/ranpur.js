@@ -6,7 +6,8 @@ async function showSubCards(type) {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         deskripsi: document.getElementById('deskripsi-cards'),
         wilayahBoxes: document.getElementById('wilayah-boxes'),
-        showSucadBoxes: document.getElementById('show-Sucad-Boxes')
+        showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Bersihkan semua container dengan efek fade
@@ -18,7 +19,7 @@ async function showSubCards(type) {
         }
     });
 
-    
+
     try {
         // Ambil data dari API
         const response = await fetch('/wilayah/getTIpeBykategori/' + type);
@@ -92,7 +93,8 @@ async function showSubSubCards(subCardName) {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
         deskripsi: document.getElementById('deskripsi-cards'),
-        wilayahBoxes: document.getElementById('wilayah-boxes')
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear dengan efek fade
@@ -145,7 +147,8 @@ async function showSucadBoxes(subSubCardLink) {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         showSucadBoxes: document.getElementById('show-Sucad-Boxes'),
         deskripsi: document.getElementById('deskripsi-cards'),
-        wilayahBoxes: document.getElementById('wilayah-boxes')
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear containers dengan fade
@@ -192,12 +195,12 @@ async function showSucadBoxes(subSubCardLink) {
     containers.showSucadBoxes.innerHTML = boxesHTML;
 }
 
-async function showSubSubSubCards(subSubCardLink) {
+
+async function totalperwilayah(subSubCardLink) {
     const containers = {
         subSubSub: document.getElementById('sub-sub-sub-cards'),
-        subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         deskripsi: document.getElementById('deskripsi-cards'),
-        wilayahBoxes: document.getElementById('wilayah-boxes'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear containers dengan fade
@@ -205,12 +208,203 @@ async function showSubSubSubCards(subSubCardLink) {
         if (container) {
             container.style.opacity = '0';
             container.innerHTML = '';
-            setTimeout(() => container.style.opacity = '1', 100);
+            setTimeout(() => (container.style.opacity = '1'), 100);
         }
     });
 
     try {
-        const stokResponse = await fetch('/stokpusat/getBytipe/' + subSubCardLink);
+        // Mendapatkan sub_wilayah berdasarkan nama_wilayah
+        const wilayahResponse = await fetch('/wilayah/getSubWilayahByWilayah/' + subSubCardLink);
+        if (!wilayahResponse.ok) throw new Error('Gagal mengambil data sub wilayah.');
+
+        const wilayahData = await wilayahResponse.json();
+        const subWilayahs = wilayahData.map(item => item.sub_wilayah.toLowerCase());
+
+        // Jika tidak ada sub_wilayah ditemukan
+        if (subWilayahs.length === 0) {
+            containers.deskripsi.innerHTML = '<div class="alert alert-info fade-in">Sub Wilayah tidak ditemukan</div>';
+            return;
+        }
+
+        // Mengambil stok berdasarkan nama_versi untuk setiap sub_wilayah
+        const stokPromises = wilayahData.map(item => 
+            fetch(`/stokpusat/ambilpersubwilayah/${item.sub_wilayah}`)
+        );
+        const stokResponses = await Promise.all(stokPromises);
+        const stokDataArray = await Promise.all(stokResponses.map(response => response.json()));
+
+        // Log data stok untuk debug
+        const groupedData = {};
+
+        // Mengelompokkan data berdasarkan nama_kategori
+        stokDataArray.forEach(stokData => {
+            if (stokData.message === "Data tidak ditemukan") return;
+
+            stokData.forEach(stok => {
+                const kategori = stok.nama_kategori; // Ambil nama_kategori
+                // Jika kategori belum ada dalam groupedData, buat array baru
+                if (!groupedData[kategori]) {
+                    groupedData[kategori] = [];
+                }
+
+                // Parse tabel HTML dari Deskripsi
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(stok.Deskripsi, 'text/html');
+                const rows = doc.querySelectorAll('table tbody tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length >= 4) { // Memastikan ada setidaknya 4 kolom
+                        const partNumber = cells[0].textContent.trim();
+                        const jenisSucad = cells[1].textContent.trim();
+                        const namaSucad = cells[2].textContent.trim();
+                        const yonkav = cells[3].textContent.trim();
+                        groupedData[kategori].push({
+                            partNumber: partNumber,
+                            jenisSucad: jenisSucad,
+                            namaSucad: namaSucad,
+                            yonkav: yonkav,
+                        });
+                    }
+                });
+            });
+        });
+
+        // Step 2: Membuat header tabel dinamis
+        let tableHTML = '';
+        
+        // Iterasi setiap kategori untuk membuat tabel terpisah
+        for (const kategori in groupedData) {
+            tableHTML += `
+                <div class="table-responsive">
+                    <table style="border: 1px solid #ccc; border-collapse: collapse; width: 100%; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                        <thead>
+                            <tr>
+                            <th colspan="${subWilayahs.length + 4}" style="border: 1px solid #ccc; text-align: center; background-color: #007bff; color: white; font-size: 1.2em;">Tabel Stok untuk Kategori: ${kategori}</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; text-align: center;">Part Number</th>
+                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; text-align: center;">Jenis Sucad</th>
+                            <th style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; text-align: center;">Nama Sucad</th>
+            `;
+
+            // Menambahkan header untuk setiap subWilayah
+            subWilayahs.forEach(subWilayah => {
+                tableHTML += `<th style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; text-align: center;">${subWilayah}</th>`;
+            });
+
+            tableHTML += `<th style="border: 1px solid #ccc; padding: 10px; background-color: #f8f9fa; text-align: center;">Total</th></tr></thead><tbody>`;
+
+            // Step 3: Iterasi data berdasarkan Part Number
+            const partNumbers = []; // Menyimpan semua Part Number unik
+            const dataArray = groupedData[kategori];
+
+            if (dataArray) {
+                dataArray.forEach(data => {
+                    if (!partNumbers.includes(data.partNumber)) {
+                        partNumbers.push(data.partNumber);
+                    }
+                });
+            }
+
+            // Iterasi Part Numbers
+            partNumbers.forEach(partNumber => {
+                let jenisSucad = '';
+                let namaSucad = '';
+                let totalYonkav = 0; // Inisialisasi total
+
+                dataArray.forEach(item => {
+                    if (item.partNumber.toLowerCase() === partNumber.toLowerCase()) {
+                        jenisSucad = item.jenisSucad;
+                        namaSucad = item.namaSucad;
+                        totalYonkav += parseInt(item.yonkav) || 0; // Tambahkan ke total
+                    }
+                });
+
+                tableHTML += `<tr>
+                <td style="border: 1px solid #ccc; text-align: center;">${partNumber}</td>
+                <td style="border: 1px solid #ccc; text-align: center;">${jenisSucad}</td>
+                <td style="border: 1px solid #ccc; text-align: center;">${namaSucad}</td>
+                `;
+
+                // Tambahkan data berdasarkan subWilayah
+                subWilayahs.forEach(subWilayah => {
+                    const data = dataArray.find(item => item.partNumber.toLowerCase() === partNumber.toLowerCase());
+                    tableHTML += `<td style="border: 1px solid #ccc; text-align: center;">${data ? data.yonkav : '-'}</td>`;
+                });
+
+                tableHTML += `<td style="border: 1px solid #ccc; text-align: center;">${totalYonkav}</td>`; // Tampilkan total
+                tableHTML += `</tr>`;
+            });
+
+            tableHTML += `</tbody>`;
+        }
+
+        // Step 4: Tampilkan tabel
+        containers.totalperwilayahcards.innerHTML = `
+        <button id="downloadTableBtn">Download Semua Tabel ke PDF</button>
+            ${tableHTML}
+        </table>
+        </div>
+        `;
+
+        // Event listener untuk tombol download
+        document.getElementById('downloadTableBtn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            const tables = containers.totalperwilayahcards.querySelectorAll('table');
+            tables.forEach((table, index) => {
+                pdf.autoTable({ html: table });
+                if (index < tables.length - 2) {
+                    pdf.addPage();
+                }
+            });
+            pdf.save(`Tabel_${subSubCardLink}.pdf`);
+        });
+
+        // Implementasi pencarian
+        const searchInput = document.createElement('input');
+        searchInput.setAttribute('placeholder', 'Cari...');
+        searchInput.classList.add('search-input');
+        containers.totalperwilayahcards.prepend(searchInput);
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const rows = containers.totalperwilayahcards.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    } catch (error) {
+        console.error(error);
+        containers.totalperwilayahcards.innerHTML = '<div class="alert alert-danger fade-in">Terjadi kesalahan saat mengambil data stok</div>';
+    }
+}
+
+async function showSubSubSubCards(subSubCardLink) {
+    const containers = {
+        subSubSub: document.getElementById('sub-sub-sub-cards'),
+        subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
+        subSubSubSubSub: document.getElementById('sub-sub-sub-sub-sub-cards'),
+        deskripsi: document.getElementById('deskripsi-cards'),
+        
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
+        wilayahBoxes: document.getElementById('wilayah-boxes'),
+
+    };
+
+    // Clear containers dengan fade
+    Object.values(containers).forEach(container => {
+        if (container) {
+            container.style.opacity = '0';
+            container.innerHTML = '';
+            setTimeout(() => (container.style.opacity = '1'), 100);
+        }
+    });
+
+    try {
+        const stokResponse = await fetch('/stokpusat/ambilsemua/' + subSubCardLink);
         if (!stokResponse.ok) throw new Error('Gagal mengambil data Stok.');
 
         const stokData = await stokResponse.json();
@@ -219,99 +413,150 @@ async function showSubSubSubCards(subSubCardLink) {
             return;
         }
 
-        if (stokData.length > 0) {
-            stokData.forEach((stok, index) => {
-                const descriptionParts = stok.deskripsi ? stok.deskripsi.split('<hr>').map(part => part.trim()) : [];
+        // Log data stok untuk debug
+        const groupedData = {};
 
-                const tabsHTML = descriptionParts.map((_, index) => `
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link ${index === 0 ? 'active' : ''}" 
-                                id="sheet-${stok.id}-${index}-tab" 
-                                data-bs-toggle="tab" 
-                                data-bs-target="#sheet-${stok.id}-${index}" 
-                                type="button" 
-                                role="tab"
-                                style="border-radius: 10px 10px 0 0">
-                            Sheet ${index + 1}
-                        </button>
-                    </li>
-                `).join('');
+        // Mengelompokkan data berdasarkan sub_wilayah
+        stokData.forEach(stok => {
+            const subWilayah = stok.sub_wilayah;
 
-                const tabContentsHTML = descriptionParts.map((part, index) => `
-                    <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" 
-                         id="sheet-${stok.id}-${index}" 
-                         role="tabpanel"
-                         style="animation: fadeIn 0.3s ease-out">
-                        ${part || `Konten untuk Sheet ${index + 1} kosong`}
-                    </div>
-                `).join('');
-                //TOTAL
-                const cardHTML = `
-                    <div class="col" style="animation: fadeInUp ${0.2 + index * 0.1}s ease-out">
-                        <div class="card shadow-lg border-0 mb-4" style="border-radius: 20px; overflow: hidden">
-                            <div class="card-header bg-primary text-white py-3" style="border-radius: 20px 20px 0 0">
-                                <h5 class="mb-0 text-center fw-bold">STOK DATA PUSAT - ${stok.nama_kategori}</h5>
-                                <button class="btn btn-light btn-sm" onclick="downloadTableToPDF('${stok.id}', '${stok.nama_kategori}')">Download PDF</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-light" style="border-radius: 10px 0 0 10px">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                    <input type="text" 
-                                           class="form-control search-input" 
-                                           data-target="${stok.id}"
-                                           data-kategori="${stok.nama_kategori}"
-                                           placeholder="Cari data..."
-                                           style="border-radius: 0 10px 10px 0">
-                                </div>
-                                <ul class="nav nav-tabs" role="tablist">
-                                    ${tabsHTML}
-                                </ul>
-                                <div class="tab-content mt-3">
-                                    ${tabContentsHTML}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            // Jika sub wilayah belum ada dalam groupedData, buat array baru
+            if (!groupedData[subWilayah]) {
+                groupedData[subWilayah] = [];
+            }
 
-                containers.subSubSub.insertAdjacentHTML('beforeend', cardHTML);
-            });
+            // Parse tabel HTML dari Deskripsi
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(stok.Deskripsi, 'text/html');
+            const rows = doc.querySelectorAll('table tbody tr');
 
-            // Implementasi pencarian
-            document.querySelectorAll('.search-input').forEach(input => {
-                input.addEventListener('input', function () {
-                    const searchTerm = this.value.toLowerCase();
-                    const stokId = this.getAttribute('data-target');
-                    const kategori = this.getAttribute('data-kategori');
-
-                    const cardContainer = this.closest('.card');
-                    const tables = cardContainer.querySelectorAll(`#sheet-${stokId}-0 table, #sheet-${stokId}-1 table, #sheet-${stokId}-2 table`);
-
-                    tables.forEach(table => {
-                        const rows = table.querySelectorAll('tr');
-                        rows.forEach((row, index) => {
-                            if (index === 0) return;
-
-                            const text = row.textContent.toLowerCase();
-                            row.style.transition = 'opacity 0.3s ease';
-                            if (text.includes(searchTerm)) {
-                                row.style.display = '';
-                                row.style.opacity = '1';
-                            } else {
-                                row.style.opacity = '0';
-                                setTimeout(() => row.style.display = 'none', 300);
-                            }
-                        });
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length >= 4) { // Memastikan ada setidaknya 4 kolom
+                    const partNumber = cells[0].textContent.trim();
+                    const jenisSucad = cells[1].textContent.trim();
+                    const namaSucad = cells[2].textContent.trim();
+                    const yonkav = cells[3].textContent.trim();
+                    groupedData[subWilayah].push({
+                        partNumber: partNumber,
+                        jenisSucad: jenisSucad,
+                        namaSucad: namaSucad,
+                        yonkav: yonkav,
                     });
-                });
+                }
             });
-        }
+        });
+
+        console.log(groupedData); // Debug grouped data
+
+        // Step 2: Membuat header tabel dinamis
+        let tableHTML = `
+<thead>
+    <tr>
+        <th>Part Number</th>
+        <th>Jenis Sucad</th>
+        <th>Nama Sucad</th>
+`;
+
+        // Menambahkan header untuk setiap subWilayah
+        Object.keys(groupedData).forEach(subWilayah => {
+            tableHTML += `<th>${subWilayah}</th>`;
+        });
+
+        tableHTML += `</tr></thead><tbody>`;
+
+        // Step 3: Iterasi data berdasarkan Part Number
+        const partNumbers = []; // Menyimpan semua Part Number unik
+        // Ambil semua Part Number dari groupedData
+        Object.values(groupedData).forEach(dataArray => {
+            dataArray.forEach(data => {
+                if (!partNumbers.includes(data.partNumber)) {
+                    partNumbers.push(data.partNumber);
+                }
+            });
+        });
+        console.log("partNumbers: ", partNumbers);
+
+        // Iterasi Part Numbers
+        partNumbers.forEach(partNumber => {
+            // Ambil data pertama yang cocok untuk jenisSucad dan namaSucad
+            let jenisSucad = '';
+            let namaSucad = '';
+
+            Object.values(groupedData).forEach(dataArray => {
+                const match = dataArray.find(item => item.partNumber === partNumber);
+                if (match) {
+                    jenisSucad = match.jenisSucad;
+                    namaSucad = match.namaSucad;
+                }
+            });
+
+            tableHTML += `<tr>
+    <td>${partNumber}</td>
+    <td>${jenisSucad}</td>
+    <td>${namaSucad}</td>
+`;
+
+            // Tambahkan data berdasarkan subWilayah
+            Object.keys(groupedData).forEach(subWilayah => {
+                const matches = groupedData[subWilayah].filter(item => item.partNumber === partNumber);
+                if (matches.length > 0) {
+                    tableHTML += `<td>${matches.map(match => match.yonkav).join(', ')}</td>`;
+                } else {
+                    tableHTML += `<td></td>`;
+                }
+            });
+
+            tableHTML += `</tr>`;
+        });
+
+        tableHTML += `</tbody>`;
+
+        // Step 4: Tampilkan tabel
+        containers.subSubSub.innerHTML = `
+<table class="table table-bordered table-striped">
+    ${tableHTML}
+</table>
+<button id="downloadTableBtn">Download Tabel ke PDF</button>
+`;
+
+        // Event listener untuk tombol download
+        document.getElementById('downloadTableBtn').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            pdf.autoTable({ html: containers.subSubSub.querySelector('table') });
+            pdf.save(`Tabel_${subSubCardLink}.pdf`);
+        });
+
+        // Implementasi pencarian
+        const searchInput = document.createElement('input');
+        searchInput.setAttribute('placeholder', 'Cari...');
+        searchInput.classList.add('search-input');
+        containers.subSubSub.prepend(searchInput);
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            const rows = containers.subSubSub.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
     } catch (error) {
         console.error(error);
         containers.subSubSub.innerHTML = '<div class="alert alert-danger fade-in">Terjadi kesalahan saat mengambil data stok</div>';
     }
+}
+
+function showTabContent(stokId, index) {
+    const tabContents = document.querySelectorAll(`#sheet-${stokId}-0, #sheet-${stokId}-1, #sheet-${stokId}-2`);
+    tabContents.forEach((content, idx) => {
+        content.classList.remove('show', 'active');
+        if (idx === index) {
+            content.classList.add('show', 'active');
+        }
+    });
 }
 
 async function showSubSubSubSubCards(nama_wilayah) {
@@ -319,7 +564,9 @@ async function showSubSubSubSubCards(nama_wilayah) {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         deskripsi: document.getElementById('deskripsi-cards'),
         wilayahBoxes: document.getElementById('wilayah-boxes'),
-        deskripsi: document.getElementById('deskripsi-cards')
+        deskripsi: document.getElementById('deskripsi-cards'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
+
     };
 
     // Clear dengan efek fade
@@ -374,7 +621,7 @@ async function showWilayahBoxes(wilayahlink, nama_versi) {
         deskripsi: document.getElementById('deskripsi-cards'),
         subSubSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
         subSubSubSub: document.getElementById('sub-sub-sub-cards'),
-
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear containers dengan fade
@@ -426,6 +673,7 @@ async function showWilayahBoxes(wilayahlink, nama_versi) {
 async function showSubWilayahBoxes(nama_wilayah) {
     const containers = {
         subSubSubSub: document.getElementById('sub-sub-sub-sub-cards'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear dengan efek fade
@@ -466,7 +714,24 @@ async function showSubWilayahBoxes(nama_wilayah) {
             </div>
         `).join('');
 
-        containers.subSubSubSub.innerHTML = cardsHTML;
+        // Tambahkan satu card total di akhir
+        const totalCardHTML = `
+            <div class="col-xl-3 col-md-6 mb-4" style="animation: fadeInUp ${0.2 + subWilayahData.length * 0.1}s ease-out">
+                <div class="card hover-shadow transition-300 h-100" 
+                     onclick="totalperwilayah('${subWilayahData[0].nama_wilayah}'); changeBackgroundasub(this);"
+                     style="border-radius: 15px; transform: scale(1); transition: all 0.3s ease">
+                    <div class="card-body bg-gradient-success" style="border-radius: 15px">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h5 class="text-white mb-0 fw-bold">Total</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        containers.subSubSubSub.innerHTML = cardsHTML + totalCardHTML;
 
     } catch (error) {
         console.error('Error:', error);
@@ -478,6 +743,7 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
     const containers = {
         subSubSub: document.getElementById('sub-sub-sub-cards'),
         deskripsicardcontainer: document.getElementById('deskripsi-cards'),
+        totalperwilayahcards: document.getElementById('totalperwilayahcards'),
     };
 
     // Clear containers dengan fade
@@ -490,7 +756,7 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
     });
 
     try {
-        const stokResponse = await fetch('/stokpusat/getBytipe/' + nama_versi);
+        const stokResponse = await fetch('/stokpusat/getBytipe/' + nama_versi + '/' + subwilayah);
         if (!stokResponse.ok) throw new Error('Gagal mengambil data Stok.');
 
         const stokData = await stokResponse.json();
@@ -607,7 +873,7 @@ async function deskripsipersubwilayah(nama_versi, subwilayah) {
 
                             const text = row.textContent.toLowerCase();
                             row.style.transition = 'opacity 0.3s ease';
-                            if (text.includes(searchTerm)) {
+                            if (text.includes(searchTerm) || text.includes(subwilayah)) {
                                 row.style.display = '';
                                 row.style.opacity = '1';
                             } else {

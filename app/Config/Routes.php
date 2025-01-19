@@ -39,4 +39,6 @@ $routes->get('/wilayah/getByWilayah/(:any)', 'Home::getByWilayah/$1', ['filter' 
 $routes->get('/wilayah/getSubWilayahByWilayah/(:any)', 'Home::getSubWilayahByWilayah/$1', ['filter' => 'auth']);
 $routes->get('/wilayah/getDeskripsi', 'Home::getDeskripsi', ['filter' => 'auth']);
 $routes->get('stokpusat/getBytipe/(:any)', 'Home::getBytipe/$1', ['filter' => 'auth']);
+$routes->get('stokpusat/ambilsemua/(:any)', 'Home::ambilsemua/$1', ['filter' => 'auth']);
+$routes->get('stokpusat/ambilpersubwilayah/(:any)', 'Home::ambilpersubwilayah/$1', ['filter' => 'auth']);
 $routes->get('stokpusat/getByWilayahSubWilayah/(:any)/(:any)', 'Home::getByWilayahSubWilayah/$1/$2', ['filter' => 'auth']);
