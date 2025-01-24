@@ -78,47 +78,33 @@
 
             function changeBackground(element) {
                 const cardBody = element.querySelector('.card-body');
+                const statusText = cardBody.querySelector('.text-xs');
 
-                // // Reset background color of the last clicked card
-                // if (lastClickedCard && lastClickedCard !== cardBody) {
-                //     lastClickedCard.classList.remove('bg-gradient-danger');
-                //     lastClickedCard.classList.add('bg-gradient-success');
-                // }
-
-                // Change background color of the currently clicked card
-                if (cardBody.classList.contains('bg-gradient-danger')) {
-                    cardBody.classList.remove('bg-gradient-danger');
-                    cardBody.classList.add('bg-gradient-success');
-                } else {
-                    cardBody.classList.remove('bg-gradient-success');
-                    cardBody.classList.add('bg-gradient-danger');
+                // Reset previous clicked card if exists
+                if (lastClickedCard && lastClickedCard !== cardBody) {
+                    lastClickedCard.classList.remove('card-pressed');
+                    lastClickedCard.style.border = 'none';
+                    lastClickedCard.querySelector('.text-xs').textContent = 'Klik untuk detail';
+                    lastClickedCard.querySelector('.text-xs').style.color = '#ffffff';
                 }
 
-                // Update the last clicked card
+                // Toggle pressed state for current card
+                if (!cardBody.classList.contains('card-pressed')) {
+                    cardBody.classList.add('card-pressed');
+                    cardBody.style.border = '4px solid rgba(0,0,0,0.8)'; // Border lebih tebal dan gelap
+                    cardBody.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)'; // Tambah shadow untuk emphasis
+                    statusText.textContent = 'Sedang dibuka...';
+                    statusText.style.color = '#000000';
+                } else {
+                    cardBody.classList.remove('card-pressed');
+                    cardBody.style.border = 'none';
+                    cardBody.style.boxShadow = 'none';
+                    statusText.textContent = 'Klik untuk detail';
+                    statusText.style.color = '#ffffff';
+                }
+
+                // Update last clicked card
                 lastClickedCard = cardBody;
-            }
-            let lastClickedCard1 = null;
-
-            function changeBackgroundasub(element) {
-                const cardBody = element.querySelector('.card-body');
-
-                // // Reset background color of the last clicked card
-                // if (lastClickedCard && lastClickedCard !== cardBody) {
-                //     lastClickedCard.classList.remove('bg-gradient-danger');
-                //     lastClickedCard.classList.add('bg-gradient-success');
-                // }
-
-                // Change background color of the currently clicked card
-                if (cardBody.classList.contains('bg-gradient-danger')) {
-                    cardBody.classList.remove('bg-gradient-danger');
-                    cardBody.classList.add('bg-gradient-light');
-                } else {
-                    cardBody.classList.remove('bg-gradient-light');
-                    cardBody.classList.add('bg-gradient-danger');
-                }
-
-                // Update the last clicked card
-                lastClickedCard1 = cardBody;
             }
         </script>
     </div>
